@@ -1,28 +1,28 @@
 
 import { Card } from "@/components/ui/card";
-import { Users, Target, Award, Heart } from "lucide-react";
+import { Target, Lightbulb, Rocket, Users } from "lucide-react";
 
 const About = () => {
   const values = [
     {
-      icon: <Users className="h-6 w-6" />,
-      title: "Client-Focused",
-      description: "Your success is our priority. We work closely with you to understand your goals."
+      icon: <Lightbulb className="h-6 w-6" />,
+      title: "Innovation-First",
+      description: "We stay at the forefront of AI technology to deliver cutting-edge solutions."
     },
     {
       icon: <Target className="h-6 w-6" />,
       title: "Results-Driven",
-      description: "We focus on delivering measurable results that impact your bottom line."
+      description: "Every AI solution is designed to deliver measurable business outcomes and ROI."
     },
     {
-      icon: <Award className="h-6 w-6" />,
-      title: "Quality Excellence",
-      description: "We maintain the highest standards in everything we do, from code to customer service."
+      icon: <Users className="h-6 w-6" />,
+      title: "Expert Team",
+      description: "Our team of AI specialists brings deep expertise in machine learning and automation."
     },
     {
-      icon: <Heart className="h-6 w-6" />,
-      title: "Passionate Team",
-      description: "Our team loves what we do, and it shows in the quality of our work."
+      icon: <Rocket className="h-6 w-6" />,
+      title: "Future-Ready",
+      description: "We build scalable AI solutions that grow with your business needs."
     }
   ];
 
@@ -33,23 +33,23 @@ const About = () => {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mb-16">
             <div>
               <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
-                About Our Company
+                About BTEHub
               </h2>
               <p className="text-lg text-gray-600 mb-6 leading-relaxed">
-                We're a team of passionate professionals dedicated to helping businesses succeed in the digital world. 
-                With years of experience and a commitment to excellence, we've helped hundreds of companies transform 
-                their ideas into successful digital products.
+                BTEHub is a leading artificial intelligence company specializing in AI automation, 
+                chatbot development, and prompt engineering. We help businesses harness the power of AI 
+                to streamline operations, enhance customer experiences, and drive innovation.
               </p>
               <p className="text-lg text-gray-600 leading-relaxed">
-                Our approach combines creativity with technical expertise, ensuring that every project we deliver 
-                not only looks great but also performs exceptionally and drives real business results.
+                Our expertise spans across machine learning, natural language processing, and intelligent 
+                automation, enabling us to deliver comprehensive AI solutions that transform how businesses operate.
               </p>
             </div>
             <div className="relative">
               <div className="aspect-square bg-gradient-to-br from-blue-200 to-purple-200 rounded-2xl p-8 flex items-center justify-center">
                 <img 
                   src="/api/placeholder/400/400" 
-                  alt="Team collaboration" 
+                  alt="AI Technology" 
                   className="rounded-xl shadow-lg w-full h-full object-cover"
                 />
               </div>

@@ -12,10 +12,10 @@ const Contact = () => {
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-              Get In Touch
+              Ready to Transform Your Business with AI?
             </h2>
             <p className="text-xl text-gray-600">
-              Ready to start your project? Let's discuss how we can help you achieve your goals.
+              Let's discuss how BTEHub can help you implement AI solutions that drive real results.
             </p>
           </div>
 
@@ -28,7 +28,7 @@ const Contact = () => {
                 </div>
                 <div>
                   <h3 className="font-semibold text-gray-900">Email</h3>
-                  <p className="text-gray-600">hello@yourcompany.com</p>
+                  <p className="text-gray-600">hello@btehub.com</p>
                 </div>
               </Card>
 
@@ -38,7 +38,7 @@ const Contact = () => {
                 </div>
                 <div>
                   <h3 className="font-semibold text-gray-900">Phone</h3>
-                  <p className="text-gray-600">+1 (555) 123-4567</p>
+                  <p className="text-gray-600">+1 (555) AI-BTEHUB</p>
                 </div>
               </Card>
 
@@ -48,7 +48,7 @@ const Contact = () => {
                 </div>
                 <div>
                   <h3 className="font-semibold text-gray-900">Location</h3>
-                  <p className="text-gray-600">San Francisco, CA</p>
+                  <p className="text-gray-600">AI Innovation Hub</p>
                 </div>
               </Card>
             </div>
@@ -80,23 +80,23 @@ const Contact = () => {
 
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Subject
+                    AI Project Interest
                   </label>
-                  <Input placeholder="How can we help you?" className="border-gray-200" />
+                  <Input placeholder="Chatbot, Automation, Prompt Engineering..." className="border-gray-200" />
                 </div>
 
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Message
+                    Project Details
                   </label>
                   <Textarea 
-                    placeholder="Tell us about your project..."
+                    placeholder="Tell us about your AI needs and business goals..."
                     className="min-h-[120px] border-gray-200"
                   />
                 </div>
 
                 <Button className="w-full bg-blue-600 hover:bg-blue-700 text-lg py-3">
-                  Send Message
+                  Start AI Transformation
                 </Button>
               </form>
             </Card>

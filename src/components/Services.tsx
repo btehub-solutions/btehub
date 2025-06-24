@@ -1,38 +1,38 @@
 
 import { Card } from "@/components/ui/card";
-import { Code, Palette, Rocket, Shield, Smartphone, TrendingUp } from "lucide-react";
+import { Bot, Zap, MessageCircle, Cpu, Brain, Settings } from "lucide-react";
 
 const Services = () => {
   const services = [
     {
-      icon: <Code className="h-8 w-8" />,
-      title: "Web Development",
-      description: "Custom websites and web applications built with modern technologies and best practices."
+      icon: <Brain className="h-8 w-8" />,
+      title: "Artificial Intelligence",
+      description: "Custom AI solutions tailored to your business needs, from machine learning models to intelligent automation systems."
     },
     {
-      icon: <Smartphone className="h-8 w-8" />,
-      title: "Mobile Apps",
-      description: "Native and cross-platform mobile applications that engage users and drive business growth."
+      icon: <MessageCircle className="h-8 w-8" />,
+      title: "Prompt Engineering",
+      description: "Expert prompt design and optimization to maximize AI performance and get the most accurate results from language models."
     },
     {
-      icon: <Palette className="h-8 w-8" />,
-      title: "UI/UX Design",
-      description: "Beautiful, intuitive designs that create exceptional user experiences and boost conversions."
+      icon: <Bot className="h-8 w-8" />,
+      title: "Chatbot Development",
+      description: "Intelligent conversational AI that engages customers, provides support, and drives business growth 24/7."
     },
     {
-      icon: <TrendingUp className="h-8 w-8" />,
-      title: "Digital Marketing",
-      description: "Strategic marketing campaigns that increase visibility and drive qualified traffic to your business."
+      icon: <Zap className="h-8 w-8" />,
+      title: "AI Automation",
+      description: "Streamline your workflows with intelligent automation that reduces manual tasks and increases efficiency."
     },
     {
-      icon: <Shield className="h-8 w-8" />,
-      title: "Cybersecurity",
-      description: "Comprehensive security solutions to protect your digital assets and customer data."
+      icon: <Cpu className="h-8 w-8" />,
+      title: "AI Integration",
+      description: "Seamlessly integrate AI capabilities into your existing systems and applications for enhanced functionality."
     },
     {
-      icon: <Rocket className="h-8 w-8" />,
-      title: "Consulting",
-      description: "Expert guidance on technology strategy, digital transformation, and business optimization."
+      icon: <Settings className="h-8 w-8" />,
+      title: "AI Consulting",
+      description: "Strategic guidance on AI implementation, helping you identify opportunities and create an AI roadmap for your business."
     }
   ];
 
@@ -41,10 +41,10 @@ const Services = () => {
       <div className="container mx-auto px-4">
         <div className="max-w-3xl mx-auto text-center mb-16">
           <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-            Our Services
+            Our AI Services
           </h2>
           <p className="text-xl text-gray-600">
-            We offer comprehensive solutions to help your business thrive in the digital landscape.
+            Comprehensive artificial intelligence solutions to transform your business operations and drive innovation.
           </p>
         </div>
 
