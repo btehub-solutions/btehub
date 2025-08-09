@@ -7,14 +7,14 @@ import { Mail, Phone, MapPin } from "lucide-react";
 
 const Contact = () => {
   return (
-    <section id="contact" className="py-20 bg-white">
+    <section id="contact" className="py-20 bg-background">
       <div className="container mx-auto px-4">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
               Ready to Transform Your Business with AI?
             </h2>
-            <p className="text-xl text-gray-600">
+            <p className="text-xl text-muted-foreground">
               Let's discuss how BTEHub can help you implement AI solutions that drive real results.
             </p>
           </div>
@@ -22,80 +22,80 @@ const Contact = () => {
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
             {/* Contact Info */}
             <div className="space-y-6">
-              <Card className="p-6 flex items-center space-x-4 hover:shadow-lg transition-shadow border-0 bg-gradient-to-br from-blue-50 to-white">
-                <div className="text-blue-600">
+              <Card className="p-6 flex items-center space-x-4 hover:shadow-lg transition-shadow border-0 bg-gradient-to-br from-primary/5 to-background">
+                <div className="text-primary">
                   <Mail className="h-6 w-6" />
                 </div>
                 <div>
-                  <h3 className="font-semibold text-gray-900">Email</h3>
-                  <p className="text-gray-600">hello@btehub.com</p>
+                  <h3 className="font-semibold text-foreground">Email</h3>
+                  <p className="text-muted-foreground">hello@btehub.com</p>
                 </div>
               </Card>
 
-              <Card className="p-6 flex items-center space-x-4 hover:shadow-lg transition-shadow border-0 bg-gradient-to-br from-blue-50 to-white">
-                <div className="text-blue-600">
+              <Card className="p-6 flex items-center space-x-4 hover:shadow-lg transition-shadow border-0 bg-gradient-to-br from-primary/5 to-background">
+                <div className="text-primary">
                   <Phone className="h-6 w-6" />
                 </div>
                 <div>
-                  <h3 className="font-semibold text-gray-900">Phone</h3>
-                  <p className="text-gray-600">+1 (555) AI-BTEHUB</p>
+                  <h3 className="font-semibold text-foreground">Phone</h3>
+                  <p className="text-muted-foreground">+1 (555) AI-BTEHUB</p>
                 </div>
               </Card>
 
-              <Card className="p-6 flex items-center space-x-4 hover:shadow-lg transition-shadow border-0 bg-gradient-to-br from-blue-50 to-white">
-                <div className="text-blue-600">
+              <Card className="p-6 flex items-center space-x-4 hover:shadow-lg transition-shadow border-0 bg-gradient-to-br from-primary/5 to-background">
+                <div className="text-primary">
                   <MapPin className="h-6 w-6" />
                 </div>
                 <div>
-                  <h3 className="font-semibold text-gray-900">Location</h3>
-                  <p className="text-gray-600">AI Innovation Hub</p>
+                  <h3 className="font-semibold text-foreground">Location</h3>
+                  <p className="text-muted-foreground">AI Innovation Hub</p>
                 </div>
               </Card>
             </div>
 
             {/* Contact Form */}
-            <Card className="lg:col-span-2 p-8 border-0 bg-gradient-to-br from-gray-50 to-white">
+            <Card className="lg:col-span-2 p-8 border-0 bg-gradient-to-br from-primary/5 to-background">
               <form className="space-y-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                    <label className="block text-sm font-medium text-muted-foreground mb-2">
                       First Name
                     </label>
-                    <Input placeholder="John" className="border-gray-200" />
+                    <Input placeholder="John" className="border-input" />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                    <label className="block text-sm font-medium text-muted-foreground mb-2">
                       Last Name
                     </label>
-                    <Input placeholder="Doe" className="border-gray-200" />
+                    <Input placeholder="Doe" className="border-input" />
                   </div>
                 </div>
                 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <label className="block text-sm font-medium text-muted-foreground mb-2">
                     Email
                   </label>
-                  <Input type="email" placeholder="john@example.com" className="border-gray-200" />
+                  <Input type="email" placeholder="john@example.com" className="border-input" />
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <label className="block text-sm font-medium text-muted-foreground mb-2">
                     AI Project Interest
                   </label>
-                  <Input placeholder="Chatbot, Automation, Prompt Engineering..." className="border-gray-200" />
+                  <Input placeholder="Chatbot, Automation, Prompt Engineering..." className="border-input" />
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <label className="block text-sm font-medium text-muted-foreground mb-2">
                     Project Details
                   </label>
                   <Textarea 
                     placeholder="Tell us about your AI needs and business goals..."
-                    className="min-h-[120px] border-gray-200"
+                    className="min-h-[120px] border-input"
                   />
                 </div>
 
-                <Button className="w-full bg-blue-600 hover:bg-blue-700 text-lg py-3">
+                <Button className="w-full text-lg py-3">
                   Start AI Transformation
                 </Button>
               </form>
