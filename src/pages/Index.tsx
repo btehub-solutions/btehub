@@ -6,6 +6,7 @@ import About from "@/components/About";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
 import ChatWidget from "@/components/ChatWidget";
+import BookingCalendar from "@/components/BookingCalendar";
 
 const Index = () => {
   return (
@@ -14,6 +15,7 @@ const Index = () => {
       <Hero />
       <Services />
       <About />
+      <BookingCalendar />
       <Contact />
       <Footer />
       <ChatWidget />

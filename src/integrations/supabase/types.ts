@@ -14,6 +14,89 @@ export type Database = {
   }
   public: {
     Tables: {
+      available_slots: {
+        Row: {
+          booking_id: string | null
+          created_at: string
+          date: string
+          end_time: string
+          id: string
+          is_booked: boolean
+          start_time: string
+        }
+        Insert: {
+          booking_id?: string | null
+          created_at?: string
+          date: string
+          end_time: string
+          id?: string
+          is_booked?: boolean
+          start_time: string
+        }
+        Update: {
+          booking_id?: string | null
+          created_at?: string
+          date?: string
+          end_time?: string
+          id?: string
+          is_booked?: boolean
+          start_time?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "available_slots_booking_id_fkey"
+            columns: ["booking_id"]
+            isOneToOne: false
+            referencedRelation: "bookings"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      bookings: {
+        Row: {
+          client_email: string
+          client_name: string
+          client_phone: string | null
+          created_at: string
+          duration_minutes: number
+          id: string
+          notes: string | null
+          preferred_date: string
+          preferred_time: string
+          service_type: string
+          status: string
+          updated_at: string
+        }
+        Insert: {
+          client_email: string
+          client_name: string
+          client_phone?: string | null
+          created_at?: string
+          duration_minutes?: number
+          id?: string
+          notes?: string | null
+          preferred_date: string
+          preferred_time: string
+          service_type: string
+          status?: string
+          updated_at?: string
+        }
+        Update: {
+          client_email?: string
+          client_name?: string
+          client_phone?: string | null
+          created_at?: string
+          duration_minutes?: number
+          id?: string
+          notes?: string | null
+          preferred_date?: string
+          preferred_time?: string
+          service_type?: string
+          status?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       chat_messages: {
         Row: {
           content: string
