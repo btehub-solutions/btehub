@@ -54,7 +54,8 @@ const BookingCalendar = () => {
     setIsLoading(true);
 
     try {
-      const { error } = await supabase
+      // Insert booking into database
+      const { data: bookingData, error: dbError } = await supabase
         .from('bookings')
         .insert({
           client_name: formData.name,
@@ -65,14 +66,38 @@ const BookingCalendar = () => {
           preferred_time: selectedTime,
           notes: formData.notes || null,
           status: 'pending'
-        });
+        })
+        .select()
+        .single();
 
-      if (error) throw error;
+      if (dbError) throw dbError;
 
-      toast({
-        title: "Booking Request Submitted",
-        description: "We'll contact you within 24 hours to confirm your consultation.",
+      // Create calendar event
+      const calendarResponse = await supabase.functions.invoke('calendar-booking', {
+        body: {
+          clientName: formData.name,
+          clientEmail: formData.email,
+          clientPhone: formData.phone,
+          serviceType: formData.serviceType,
+          preferredDate: format(selectedDate, 'yyyy-MM-dd'),
+          preferredTime: selectedTime,
+          notes: formData.notes
+        }
       });
+
+      if (calendarResponse.error) {
+        console.warn('Calendar event creation failed:', calendarResponse.error);
+        // Don't fail the entire booking if calendar fails
+        toast({
+          title: "Booking Submitted",
+          description: "Your booking was saved but calendar event creation failed. We'll contact you to confirm.",
+        });
+      } else {
+        toast({
+          title: "Booking Confirmed!",
+          description: "Your consultation has been scheduled and added to your calendar.",
+        });
+      }
 
       // Reset form
       setFormData({
