@@ -28,7 +28,9 @@ const Contact = () => {
                 </div>
                 <div>
                   <h3 className="font-semibold text-foreground">Email</h3>
-                  <p className="text-muted-foreground">hello@btehub.com</p>
+                  <a href="mailto:bensamoladoyin@btehub.com" className="text-muted-foreground hover:text-primary transition-colors">
+                    bensamoladoyin@btehub.com
+                  </a>
                 </div>
               </Card>
 
@@ -38,7 +40,9 @@ const Contact = () => {
                 </div>
                 <div>
                   <h3 className="font-semibold text-foreground">Phone</h3>
-                  <p className="text-muted-foreground">+1 (555) AI-BTEHUB</p>
+                  <a href="tel:+2347045422815" className="text-muted-foreground hover:text-primary transition-colors">
+                    07045422815
+                  </a>
                 </div>
               </Card>
 
@@ -48,7 +52,7 @@ const Contact = () => {
                 </div>
                 <div>
                   <h3 className="font-semibold text-foreground">Location</h3>
-                  <p className="text-muted-foreground">AI Innovation Hub</p>
+                  <p className="text-muted-foreground">Abeokuta, Ogun State</p>
                 </div>
               </Card>
             </div>

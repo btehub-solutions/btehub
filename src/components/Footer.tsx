@@ -23,12 +23,11 @@ const Footer = () => {
           </div>
           
           <div>
-            <h4 className="text-lg font-semibold mb-4">Company</h4>
+            <h4 className="text-lg font-semibold mb-4">Contact Info</h4>
             <ul className="space-y-2 text-primary-foreground/80">
-              <li><a href="#" className="hover:text-primary-foreground transition-colors">About Us</a></li>
-              <li><a href="#" className="hover:text-primary-foreground transition-colors">Case Studies</a></li>
-              <li><a href="#" className="hover:text-primary-foreground transition-colors">Blog</a></li>
-              <li><a href="#" className="hover:text-primary-foreground transition-colors">Contact</a></li>
+              <li><a href="mailto:bensamoladoyin@btehub.com" className="hover:text-primary-foreground transition-colors">bensamoladoyin@btehub.com</a></li>
+              <li><a href="tel:+2347045422815" className="hover:text-primary-foreground transition-colors">07045422815</a></li>
+              <li><span className="text-primary-foreground/80">Abeokuta, Ogun State</span></li>
             </ul>
           </div>
         </div>
