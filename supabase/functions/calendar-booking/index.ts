@@ -83,26 +83,20 @@ async function getAccessToken() {
 }
 
 async function createCalendarEvent(booking: BookingRequest, accessToken: string) {
-  // Combine date and time
+  // Combine date and time for Africa/Lagos timezone
   const eventDateTime = new Date(`${booking.preferredDate}T${booking.preferredTime}:00`)
   const endDateTime = new Date(eventDateTime.getTime() + 60 * 60 * 1000) // 1 hour duration
 
   const event = {
-    summary: `AI Consultation - ${booking.serviceType}`,
-    description: `
-Client: ${booking.clientName}
-Email: ${booking.clientEmail}
-Phone: ${booking.clientPhone || 'Not provided'}
-Service: ${booking.serviceType}
-Notes: ${booking.notes || 'None'}
-    `.trim(),
+    summary: `${booking.serviceType} - ${booking.clientName}`,
+    description: `Booking with ${booking.clientName} for ${booking.serviceType}`,
     start: {
       dateTime: eventDateTime.toISOString(),
-      timeZone: 'UTC'
+      timeZone: 'Africa/Lagos'
     },
     end: {
       dateTime: endDateTime.toISOString(),
-      timeZone: 'UTC'
+      timeZone: 'Africa/Lagos'
     },
     attendees: [
       {
