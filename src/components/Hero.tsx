@@ -1,6 +1,7 @@
 
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Play } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const Hero = () => {
   return (
@@ -16,9 +17,11 @@ const Hero = () => {
             to help businesses unlock the full potential of artificial intelligence.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-            <Button size="lg" className="text-lg px-8 py-4 group">
-              Start Your AI Journey
-              <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
+            <Button asChild size="lg" className="text-lg px-8 py-4 group">
+              <Link to="/book">
+                Start Your AI Journey
+                <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
+              </Link>
             </Button>
             <Button variant="outline" size="lg" className="text-lg px-8 py-4 group">
               <Play className="mr-2 h-5 w-5" />
