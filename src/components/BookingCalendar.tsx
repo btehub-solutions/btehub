@@ -72,30 +72,37 @@ const BookingCalendar = () => {
 
       if (dbError) throw dbError;
 
-      // Create calendar event
-      const calendarResponse = await supabase.functions.invoke('calendar-booking', {
-        body: {
-          clientName: formData.name,
-          clientEmail: formData.email,
-          clientPhone: formData.phone,
-          serviceType: formData.serviceType,
-          preferredDate: format(selectedDate, 'yyyy-MM-dd'),
-          preferredTime: selectedTime,
-          notes: formData.notes
-        }
-      });
+      // Try to create calendar event but don't fail if it doesn't work
+      try {
+        const calendarResponse = await supabase.functions.invoke('calendar-booking', {
+          body: {
+            clientName: formData.name,
+            clientEmail: formData.email,
+            clientPhone: formData.phone,
+            serviceType: formData.serviceType,
+            preferredDate: format(selectedDate, 'yyyy-MM-dd'),
+            preferredTime: selectedTime,
+            notes: formData.notes
+          }
+        });
 
-      if (calendarResponse.error) {
-        console.warn('Calendar event creation failed:', calendarResponse.error);
-        // Don't fail the entire booking if calendar fails
+        if (calendarResponse.error) {
+          console.warn('Calendar event creation failed:', calendarResponse.error);
+          toast({
+            title: "Booking Submitted",
+            description: "Your booking was saved successfully! We'll contact you to confirm the appointment.",
+          });
+        } else {
+          toast({
+            title: "Booking Confirmed!",
+            description: "Your consultation has been scheduled and added to your calendar.",
+          });
+        }
+      } catch (calendarError) {
+        console.warn('Calendar service unavailable:', calendarError);
         toast({
           title: "Booking Submitted",
-          description: "Your booking was saved but calendar event creation failed. We'll contact you to confirm.",
-        });
-      } else {
-        toast({
-          title: "Booking Confirmed!",
-          description: "Your consultation has been scheduled and added to your calendar.",
+          description: "Your booking was saved successfully! We'll contact you to confirm the appointment.",
         });
       }
 
