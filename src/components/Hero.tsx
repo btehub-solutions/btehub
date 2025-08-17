@@ -4,6 +4,17 @@ import { ArrowRight, Play } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const Hero = () => {
+  const handleDemoClick = () => {
+    // Trigger the chat widget by dispatching a custom event
+    const chatButton = document.querySelector('[data-chat-widget]') as HTMLButtonElement;
+    if (chatButton) {
+      chatButton.click();
+    } else {
+      // Fallback: dispatch custom event for chat widget to listen to
+      window.dispatchEvent(new CustomEvent('openChatDemo'));
+    }
+  };
+
   return (
     <section id="home" className="pt-24 pb-12 md:pt-32 md:pb-20 bg-gradient-to-br from-primary/5 via-background to-primary/10">
       <div className="container mx-auto px-4">
@@ -23,7 +34,12 @@ const Hero = () => {
                 <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
               </Link>
             </Button>
-            <Button variant="outline" size="lg" className="text-lg px-8 py-4 group">
+            <Button 
+              variant="outline" 
+              size="lg" 
+              className="text-lg px-8 py-4 group"
+              onClick={handleDemoClick}
+            >
               <Play className="mr-2 h-5 w-5" />
               See AI Demo
             </Button>

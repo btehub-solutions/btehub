@@ -31,6 +31,15 @@ const ChatWidget = () => {
   }, [messages]);
 
   useEffect(() => {
+    const handleDemoEvent = () => {
+      setIsOpen(true);
+    };
+
+    window.addEventListener('openChatDemo', handleDemoEvent);
+    return () => window.removeEventListener('openChatDemo', handleDemoEvent);
+  }, []);
+
+  useEffect(() => {
     if (isOpen && messages.length === 0) {
       // Add welcome message when chat opens
       setMessages([{
@@ -105,6 +114,7 @@ const ChatWidget = () => {
           onClick={() => setIsOpen(true)}
           className="fixed bottom-6 right-6 h-14 w-14 rounded-full bg-primary hover:bg-primary/90 shadow-lg z-50 transition-all duration-300 hover:scale-110"
           size="icon"
+          data-chat-widget
         >
           <MessageCircle className="h-6 w-6" />
           <Badge className="absolute -top-1 -right-1 h-5 w-5 p-0 bg-accent text-accent-foreground text-xs flex items-center justify-center">
