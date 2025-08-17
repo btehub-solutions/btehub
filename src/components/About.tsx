@@ -73,8 +73,8 @@ const About = () => {
             <div className="relative">
               <div className="aspect-square bg-gradient-to-br from-primary/20 to-primary/5 rounded-2xl p-8 flex items-center justify-center">
                 <img 
-                  src={aiAgentImage} 
-                  alt="AI Agent - Sophisticated artificial intelligence assistant" 
+                  src="/lovable-uploads/f966e137-0539-43d9-b377-bb922e89d1e6.png" 
+                  alt="BTEHub Founder - AI Solutions Expert" 
                   className="rounded-xl shadow-lg w-full h-full object-cover"
                 />
               </div>
