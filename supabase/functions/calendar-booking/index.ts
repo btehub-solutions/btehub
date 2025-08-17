@@ -19,7 +19,19 @@ async function getAccessToken() {
     throw new Error('Google service account credentials not found')
   }
 
-  const credentials = JSON.parse(serviceAccountJson)
+  let credentials
+  try {
+    credentials = JSON.parse(serviceAccountJson)
+    console.log('Parsed credentials successfully')
+  } catch (error) {
+    console.error('Failed to parse Google service account JSON:', error)
+    throw new Error('Invalid Google service account JSON format')
+  }
+
+  if (!credentials.private_key || !credentials.client_email) {
+    console.error('Missing required fields in service account JSON')
+    throw new Error('Missing private_key or client_email in service account JSON')
+  }
   
   // Create JWT for Google OAuth
   const header = {
