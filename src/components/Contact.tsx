@@ -28,8 +28,8 @@ const Contact = () => {
                 </div>
                 <div>
                   <h3 className="font-semibold text-foreground">Email</h3>
-                  <a href="mailto:bensamoladoyin@btehub.com" className="text-muted-foreground hover:text-primary transition-colors">
-                    bensamoladoyin@btehub.com
+                  <a href="mailto:bensamoladoyin.btehub@gmail.com" className="text-muted-foreground hover:text-primary transition-colors">
+                    bensamoladoyin.btehub@gmail.com
                   </a>
                 </div>
               </Card>
