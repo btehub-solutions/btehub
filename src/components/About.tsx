@@ -36,14 +36,38 @@ const About = () => {
                 About BTEHub
               </h2>
               <p className="text-lg text-muted-foreground mb-6 leading-relaxed">
-                BTEHub is a leading artificial intelligence company specializing in AI automation, 
-                chatbot development, and prompt engineering. We help businesses harness the power of AI 
-                to streamline operations, enhance customer experiences, and drive innovation.
+                At BTEHub, we transform ideas into intelligent solutions. We help businesses and creators 
+                leverage the power of Artificial Intelligence to work smarter, faster, and more efficiently. 
+                Our expertise spans AI Prompt Engineering, Chatbot Development, AI Automation Agencies (AAA), 
+                and AI Consulting, providing tailored solutions that drive real results.
               </p>
-              <p className="text-lg text-muted-foreground leading-relaxed">
-                Our expertise spans across machine learning, natural language processing, and intelligent 
-                automation, enabling us to deliver comprehensive AI solutions that transform how businesses operate.
+              <p className="text-lg text-muted-foreground mb-8 leading-relaxed">
+                Whether it's automating workflows, enhancing customer engagement, or building AI-powered 
+                applications, BTEHub is your partner in innovation. We combine technical expertise with 
+                creative problem-solving to deliver solutions that empower businesses, simplify processes, 
+                and unlock new opportunities in the AI-driven world.
               </p>
+              
+              <div className="space-y-4 bg-primary/5 p-6 rounded-lg border">
+                <div>
+                  <h3 className="text-lg font-semibold text-foreground mb-2 flex items-center gap-2">
+                    <Target className="h-5 w-5 text-primary" />
+                    Our Mission
+                  </h3>
+                  <p className="text-muted-foreground">
+                    To help businesses harness AI effectively, turning complex challenges into simple, actionable solutions.
+                  </p>
+                </div>
+                <div>
+                  <h3 className="text-lg font-semibold text-foreground mb-2 flex items-center gap-2">
+                    <Lightbulb className="h-5 w-5 text-primary" />
+                    Our Vision
+                  </h3>
+                  <p className="text-muted-foreground">
+                    To be a leading hub for AI innovation, enabling organizations to thrive in the digital age.
+                  </p>
+                </div>
+              </div>
             </div>
             <div className="relative">
               <div className="aspect-square bg-gradient-to-br from-primary/20 to-primary/5 rounded-2xl p-8 flex items-center justify-center">
