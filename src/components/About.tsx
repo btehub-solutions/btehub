@@ -1,7 +1,7 @@
 
 import { Card } from "@/components/ui/card";
 import { Target, Lightbulb, Rocket, Users } from "lucide-react";
-import aiTechnologyImage from "@/assets/ai-technology.jpg";
+import aiAgentImage from "@/assets/ai-agent.jpg";
 
 const About = () => {
   const values = [
@@ -73,8 +73,8 @@ const About = () => {
             <div className="relative">
               <div className="aspect-square bg-gradient-to-br from-primary/20 to-primary/5 rounded-2xl p-8 flex items-center justify-center">
                 <img 
-                  src={aiTechnologyImage} 
-                  alt="AI Technology - Neural networks and artificial intelligence visualization" 
+                  src={aiAgentImage} 
+                  alt="AI Agent - Sophisticated artificial intelligence assistant" 
                   className="rounded-xl shadow-lg w-full h-full object-cover"
                 />
               </div>
