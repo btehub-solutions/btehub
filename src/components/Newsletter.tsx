@@ -4,19 +4,48 @@ import { Input } from "@/components/ui/input";
 import { Mail, TrendingUp, Zap } from "lucide-react";
 import { useState } from "react";
 import { useToast } from "@/components/ui/use-toast";
+import { supabase } from "@/integrations/supabase/client";
 
 const Newsletter = () => {
   const [email, setEmail] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const { toast } = useToast();
 
-  const handleSubscribe = (e: React.FormEvent) => {
+  const handleSubscribe = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (email) {
+    if (!email) return;
+
+    setIsSubmitting(true);
+    try {
+      const { error } = await supabase
+        .from('newsletter_subscriptions')
+        .insert([{ email }]);
+
+      if (error) {
+        if (error.code === '23505') { // Unique constraint violation
+          toast({
+            title: "Already subscribed!",
+            description: "This email is already subscribed to our newsletter.",
+          });
+        } else {
+          throw error;
+        }
+      } else {
+        toast({
+          title: "Success!",
+          description: "You've been subscribed to BTEHub's AI Newsletter",
+        });
+        setEmail("");
+      }
+    } catch (error) {
+      console.error('Subscription error:', error);
       toast({
-        title: "Success!",
-        description: "You've been subscribed to BTEHub's AI Newsletter",
+        title: "Error",
+        description: "Failed to subscribe. Please try again later.",
+        variant: "destructive",
       });
-      setEmail("");
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -114,8 +143,8 @@ const Newsletter = () => {
                 className="flex-1"
                 required
               />
-              <Button type="submit" className="sm:w-auto">
-                Subscribe Free
+              <Button type="submit" className="sm:w-auto" disabled={isSubmitting}>
+                {isSubmitting ? "Subscribing..." : "Subscribe Free"}
               </Button>
             </form>
             <p className="text-xs text-muted-foreground mt-4">
