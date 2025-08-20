@@ -17,31 +17,23 @@ const Newsletter = () => {
 
     setIsSubmitting(true);
     try {
-      const { error } = await supabase
-        .from('newsletter_subscriptions')
-        .insert([{ email }]);
+      // Send confirmation email instead of direct subscription
+      const response = await supabase.functions.invoke('newsletter-confirmation-send', {
+        body: { email }
+      });
 
-      if (error) {
-        if (error.code === '23505') { // Unique constraint violation
-          toast({
-            title: "Already subscribed!",
-            description: "This email is already subscribed to our newsletter.",
-          });
-        } else {
-          throw error;
-        }
-      } else {
-        toast({
-          title: "Success!",
-          description: "You've been subscribed to BTEHub's AI Newsletter",
-        });
-        setEmail("");
-      }
+      if (response.error) throw response.error;
+
+      toast({
+        title: "Check your email!",
+        description: "We've sent you a confirmation link to complete your subscription.",
+      });
+      setEmail("");
     } catch (error) {
       console.error('Subscription error:', error);
       toast({
         title: "Error",
-        description: "Failed to subscribe. Please try again later.",
+        description: "Failed to send confirmation email. Please try again later.",
         variant: "destructive",
       });
     } finally {
@@ -144,11 +136,12 @@ const Newsletter = () => {
                 required
               />
               <Button type="submit" className="sm:w-auto" disabled={isSubmitting}>
-                {isSubmitting ? "Subscribing..." : "Subscribe Free"}
+                {isSubmitting ? "Sending..." : "Subscribe Free"}
               </Button>
             </form>
             <p className="text-xs text-muted-foreground mt-4">
-              No spam. Unsubscribe anytime. Join the AI revolution today.
+              No spam. Unsubscribe anytime. 
+              <a href="/newsletter/archive" className="text-primary hover:underline ml-1">View past issues</a>
             </p>
           </Card>
         </div>

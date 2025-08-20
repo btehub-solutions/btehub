@@ -61,29 +61,44 @@ const handler = async (req: Request): Promise<Response> => {
       );
     }
 
-    // Generate HTML content
-    const htmlContent = generateNewsletterHTML(issue);
-
-    // Send emails in batches
-    const batchSize = 90;
-    const emails = subscribers.map((sub: any) => sub.email);
+    // Send emails individually for personalized unsubscribe links
     const results = [];
 
-    for (let i = 0; i < emails.length; i += batchSize) {
-      const batch = emails.slice(i, i + batchSize);
-      
+    for (const subscriber of subscribers) {
       try {
+        // Generate HTML content with personalized unsubscribe link
+        const htmlContent = generateNewsletterHTML(issue, subscriber.unsubscribe_token);
+        
         const emailResponse = await resend.emails.send({
           from: "BTEHub Newsletter <newsletter@btehub.com>",
-          to: batch,
+          to: [subscriber.email],
           subject: issue.title,
           html: htmlContent,
         });
 
-        results.push({ success: true, count: batch.length, data: emailResponse });
+        // Track analytics
+        await fetch(
+          `${Deno.env.get("SUPABASE_URL")}/rest/v1/newsletter_analytics`,
+          {
+            method: "POST",
+            headers: {
+              apikey: Deno.env.get("SUPABASE_ANON_KEY") || "",
+              authorization: `Bearer ${Deno.env.get("SUPABASE_ANON_KEY")}`,
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              newsletter_issue_id: issueId,
+              email: subscriber.email,
+              event_type: "sent",
+              metadata: { sent_at: new Date().toISOString() }
+            }),
+          }
+        );
+
+        results.push({ success: true, count: 1, data: emailResponse });
       } catch (error) {
-        console.error("Batch send error:", error);
-        results.push({ success: false, count: batch.length, error: error.message });
+        console.error("Send error for", subscriber.email, ":", error);
+        results.push({ success: false, count: 1, error: error.message });
       }
     }
 
@@ -131,7 +146,7 @@ const handler = async (req: Request): Promise<Response> => {
   }
 };
 
-function generateNewsletterHTML(issue: any): string {
+function generateNewsletterHTML(issue: any, unsubscribeToken?: string): string {
   const content = issue.content;
   
   return `
@@ -196,7 +211,7 @@ function generateNewsletterHTML(issue: any): string {
             <p style="font-size: 12px; color: #64748b; margin: 12px 0;">— BTEHub Team</p>
             <p style="font-size: 11px; color: #94a3b8; margin: 6px 0;">
               You are receiving this because you subscribed on our website. 
-              <a href="{{UNSUBSCRIBE_URL}}" style="color: #0ea5e9; text-decoration: none;">Unsubscribe</a>
+              <a href="${Deno.env.get("SUPABASE_URL")}/functions/v1/newsletter-unsubscribe?token=${unsubscribeToken || 'UNSUBSCRIBE_TOKEN'}" style="color: #0ea5e9; text-decoration: none;">Unsubscribe</a>
             </p>
           </div>
         </div>

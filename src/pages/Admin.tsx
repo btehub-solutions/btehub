@@ -6,7 +6,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Badge } from "@/components/ui/badge";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
-import { Mail, Send, Users, FileText, Plus } from "lucide-react";
+import { Mail, Send, Users, FileText, Plus, Eye, BarChart3 } from "lucide-react";
 
 interface NewsletterIssue {
   id: string;
@@ -27,11 +27,20 @@ interface Subscription {
   confirmed_at?: string;
 }
 
+interface AnalyticsData {
+  totalSent: number;
+  totalOpened: number;
+  totalClicked: number;
+  totalUnsubscribed: number;
+}
+
 const Admin = () => {
   const [issues, setIssues] = useState<NewsletterIssue[]>([]);
   const [subscribers, setSubscribers] = useState<Subscription[]>([]);
+  const [analytics, setAnalytics] = useState<AnalyticsData>({ totalSent: 0, totalOpened: 0, totalClicked: 0, totalUnsubscribed: 0 });
   const [isCreating, setIsCreating] = useState(false);
   const [isSending, setIsSending] = useState<string | null>(null);
+  const [previewIssue, setPreviewIssue] = useState<NewsletterIssue | null>(null);
   const [newIssue, setNewIssue] = useState({
     title: "",
     subtitle: "",
@@ -44,6 +53,7 @@ const Admin = () => {
   useEffect(() => {
     loadIssues();
     loadSubscribers();
+    loadAnalytics();
   }, []);
 
   const loadIssues = async () => {
@@ -71,6 +81,31 @@ const Admin = () => {
       setSubscribers(data || []);
     } catch (error) {
       console.error('Error loading subscribers:', error);
+    }
+  };
+
+  const loadAnalytics = async () => {
+    try {
+      const { data, error } = await supabase
+        .from('newsletter_analytics')
+        .select('event_type');
+
+      if (error) throw error;
+
+      const analytics = (data || []).reduce((acc, event) => {
+        acc[`total${event.event_type.charAt(0).toUpperCase() + event.event_type.slice(1)}`] = 
+          (acc[`total${event.event_type.charAt(0).toUpperCase() + event.event_type.slice(1)}`] || 0) + 1;
+        return acc;
+      }, {} as any);
+
+      setAnalytics({
+        totalSent: analytics.totalSent || 0,
+        totalOpened: analytics.totalOpened || 0,
+        totalClicked: analytics.totalClicked || 0,
+        totalUnsubscribed: analytics.totalUnsubscribed || 0,
+      });
+    } catch (error) {
+      console.error('Error loading analytics:', error);
     }
   };
 
@@ -169,6 +204,10 @@ const Admin = () => {
     }));
   };
 
+  const previewNewsletter = (issue: NewsletterIssue) => {
+    setPreviewIssue(issue);
+  };
+
   const confirmedSubscribers = subscribers.filter(s => s.status === 'confirmed').length;
   const pendingSubscribers = subscribers.filter(s => s.status === 'pending').length;
 
@@ -181,13 +220,13 @@ const Admin = () => {
         </div>
 
         {/* Stats */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
           <Card className="p-6">
             <div className="flex items-center gap-3">
               <Users className="h-8 w-8 text-primary" />
               <div>
                 <p className="text-2xl font-bold text-foreground">{confirmedSubscribers}</p>
-                <p className="text-sm text-muted-foreground">Confirmed Subscribers</p>
+                <p className="text-sm text-muted-foreground">Confirmed</p>
               </div>
             </div>
           </Card>
@@ -197,14 +236,24 @@ const Admin = () => {
               <Mail className="h-8 w-8 text-yellow-500" />
               <div>
                 <p className="text-2xl font-bold text-foreground">{pendingSubscribers}</p>
-                <p className="text-sm text-muted-foreground">Pending Confirmations</p>
+                <p className="text-sm text-muted-foreground">Pending</p>
               </div>
             </div>
           </Card>
           
           <Card className="p-6">
             <div className="flex items-center gap-3">
-              <FileText className="h-8 w-8 text-green-500" />
+              <Send className="h-8 w-8 text-green-500" />
+              <div>
+                <p className="text-2xl font-bold text-foreground">{analytics.totalSent}</p>
+                <p className="text-sm text-muted-foreground">Emails Sent</p>
+              </div>
+            </div>
+          </Card>
+
+          <Card className="p-6">
+            <div className="flex items-center gap-3">
+              <BarChart3 className="h-8 w-8 text-blue-500" />
               <div>
                 <p className="text-2xl font-bold text-foreground">{issues.length}</p>
                 <p className="text-sm text-muted-foreground">Total Issues</p>
@@ -316,6 +365,15 @@ const Admin = () => {
                   )}
                   
                   <div className="flex items-center gap-2 mt-3">
+                    <Button
+                      size="sm"
+                      variant="outline"
+                      onClick={() => previewNewsletter(issue)}
+                    >
+                      <Eye className="h-4 w-4 mr-2" />
+                      Preview
+                    </Button>
+                    
                     {issue.status === 'draft' && (
                       <Button
                         size="sm"
@@ -327,7 +385,7 @@ const Admin = () => {
                       </Button>
                     )}
                     
-                    <p className="text-xs text-muted-foreground">
+                    <p className="text-xs text-muted-foreground ml-auto">
                       Created: {new Date(issue.created_at).toLocaleDateString()}
                     </p>
                   </div>
@@ -342,6 +400,77 @@ const Admin = () => {
             </div>
           </Card>
         </div>
+
+        {/* Preview Modal */}
+        {previewIssue && (
+          <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50">
+            <div className="bg-background rounded-lg max-w-4xl max-h-[90vh] overflow-auto">
+              <div className="p-6 border-b border-border flex items-center justify-between">
+                <h3 className="text-lg font-semibold">Preview: {previewIssue.title}</h3>
+                <Button variant="outline" onClick={() => setPreviewIssue(null)}>
+                  Close
+                </Button>
+              </div>
+              <div className="p-6">
+                <div className="bg-gray-50 p-8 rounded-lg">
+                  <div className="max-w-[680px] mx-auto bg-white border rounded-lg p-6">
+                    {/* Header */}
+                    <div className="flex items-center gap-3 mb-4">
+                      <div className="w-10 h-10 bg-slate-900 text-white rounded-lg flex items-center justify-center font-bold">
+                        B
+                      </div>
+                      <div>
+                        <div className="font-bold text-slate-900">BTEHub Newsletter</div>
+                        <div className="text-xs text-slate-600">Learn AI • Build Solutions • Create Income</div>
+                      </div>
+                    </div>
+                    
+                    <hr className="my-4" />
+                    
+                    {/* Content */}
+                    <h1 className="text-2xl font-bold text-slate-900 mb-4">{previewIssue.title}</h1>
+                    {previewIssue.subtitle && (
+                      <p className="text-lg text-slate-600 mb-6">{previewIssue.subtitle}</p>
+                    )}
+                    
+                    {previewIssue.content?.highlights && (
+                      <div className="mb-6">
+                        <h2 className="text-lg font-semibold mb-4">🚀 This Week's AI Highlights</h2>
+                        <ul className="space-y-3">
+                          {previewIssue.content.highlights.map((highlight: string, index: number) => (
+                            <li key={index} className="flex items-start gap-3">
+                              <span className="text-blue-600 font-bold">•</span>
+                              <span className="text-slate-700">{highlight}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    )}
+                    
+                    {previewIssue.content?.insights && (
+                      <div className="bg-slate-100 p-4 rounded-lg mb-6">
+                        <h3 className="font-semibold mb-2">💡 Why This Matters</h3>
+                        <p className="text-slate-700">{previewIssue.content.insights}</p>
+                      </div>
+                    )}
+                    
+                    {previewIssue.content?.callToAction && (
+                      <div className="text-center py-4">
+                        <p className="text-slate-600 italic">"{previewIssue.content.callToAction}"</p>
+                      </div>
+                    )}
+                    
+                    <hr className="my-4" />
+                    
+                    <div className="text-center text-sm text-slate-600">
+                      <p>— BTEHub Team</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
