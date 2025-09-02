@@ -85,11 +85,12 @@ const About = () => {
           <div className="mb-16 bg-card border rounded-2xl p-8 shadow-sm">
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-center">
               <div className="lg:col-span-1 flex justify-center">
-                <div className="w-64 h-64 bg-muted rounded-xl flex items-center justify-center border-2 border-dashed border-muted-foreground/30">
-                  <div className="text-center text-muted-foreground">
-                    <div className="text-sm font-medium mb-1">Founder Image Placeholder</div>
-                    <div className="text-xs">Upload Ben Sam Oladoyin's Photo Here</div>
-                  </div>
+                <div className="w-64 h-64 rounded-xl overflow-hidden shadow-lg">
+                  <img 
+                    src="/lovable-uploads/25a1717a-5999-45c3-8dc4-9818931ad575.png" 
+                    alt="Ben Sam Oladoyin - Founder of BTEHub Solutions" 
+                    className="w-full h-full object-cover"
+                  />
                 </div>
               </div>
               <div className="lg:col-span-2">
