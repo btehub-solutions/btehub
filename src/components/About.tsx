@@ -81,6 +81,37 @@ const About = () => {
             </div>
           </div>
 
+          {/* About Founder Section */}
+          <div className="mb-16 bg-card border rounded-2xl p-8 shadow-sm">
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-center">
+              <div className="lg:col-span-1 flex justify-center">
+                <div className="w-64 h-64 bg-muted rounded-xl flex items-center justify-center border-2 border-dashed border-muted-foreground/30">
+                  <div className="text-center text-muted-foreground">
+                    <div className="text-sm font-medium mb-1">Founder Image Placeholder</div>
+                    <div className="text-xs">Upload Ben Sam Oladoyin's Photo Here</div>
+                  </div>
+                </div>
+              </div>
+              <div className="lg:col-span-2">
+                <h3 className="text-2xl md:text-3xl font-bold text-foreground mb-4">
+                  Meet Our Founder
+                </h3>
+                <h4 className="text-xl font-semibold text-primary mb-4">
+                  Ben Sam Oladoyin
+                </h4>
+                <p className="text-muted-foreground leading-relaxed mb-4">
+                  Ben Sam Oladoyin is the visionary founder of BTEHub Solutions, bringing a unique blend of technical expertise and creative innovation to the AI landscape. With extensive experience in Live Audio Engineering, Ben has seamlessly transitioned into the world of artificial intelligence, where he now operates at the intersection of Prompt Engineering, Chatbot Development, and AI Automation Agencies (AAA).
+                </p>
+                <p className="text-muted-foreground leading-relaxed mb-4">
+                  Known for his calm, focused, and adaptable approach, Ben is passionate about helping businesses and creators harness the transformative power of AI tools, automation, and intelligent chatbots. His philosophy centers on practical teaching, creativity, and real-world applications that boost productivity, streamline processes, and create exceptional user experiences.
+                </p>
+                <p className="text-muted-foreground leading-relaxed">
+                  Under Ben's leadership, BTEHub Solutions continues to shape the future of AI-driven business solutions, empowering organizations to thrive in an increasingly intelligent digital landscape. His commitment to innovation and practical excellence drives every solution the company delivers.
+                </p>
+              </div>
+            </div>
+          </div>
+
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {values.map((value, index) => (
               <Card key={index} className="p-6 text-center hover:shadow-lg transition-shadow bg-background border-0">
