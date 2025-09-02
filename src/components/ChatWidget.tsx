@@ -154,8 +154,12 @@ const ChatWidget = () => {
                   className={`flex gap-3 ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}
                 >
                   {message.role === 'assistant' && (
-                    <div className="h-8 w-8 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
-                      <Bot className="h-4 w-4 text-primary" />
+                    <div className="h-8 w-8 rounded-full overflow-hidden flex-shrink-0">
+                      <img 
+                        src="/lovable-uploads/25a1717a-5999-45c3-8dc4-9818931ad575.png" 
+                        alt="Ben Sam Oladoyin - AI Assistant" 
+                        className="w-full h-full object-cover"
+                      />
                     </div>
                   )}
                   <div
@@ -176,8 +180,12 @@ const ChatWidget = () => {
               ))}
               {isLoading && (
                 <div className="flex gap-3 justify-start">
-                  <div className="h-8 w-8 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
-                    <Bot className="h-4 w-4 text-primary" />
+                  <div className="h-8 w-8 rounded-full overflow-hidden flex-shrink-0">
+                    <img 
+                      src="/lovable-uploads/25a1717a-5999-45c3-8dc4-9818931ad575.png" 
+                      alt="Ben Sam Oladoyin - AI Assistant" 
+                      className="w-full h-full object-cover"
+                    />
                   </div>
                   <div className="bg-muted text-muted-foreground p-3 rounded-lg text-sm">
                     <div className="flex gap-1">
