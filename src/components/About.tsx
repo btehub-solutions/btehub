@@ -1,7 +1,7 @@
 
 import { Card } from "@/components/ui/card";
 import { Target, Lightbulb, Rocket, Users } from "lucide-react";
-import professionalAiTech from "@/assets/professional-ai-tech.jpg";
+import cleanProfessionalAi from "@/assets/clean-professional-ai.jpg";
 
 const About = () => {
   const values = [
@@ -73,8 +73,8 @@ const About = () => {
             <div className="relative">
               <div className="aspect-square bg-gradient-to-br from-primary/20 to-primary/5 rounded-2xl p-8 flex items-center justify-center">
                 <img 
-                  src={professionalAiTech} 
-                  alt="BTEHub Professional AI Technology Solutions" 
+                  src={cleanProfessionalAi} 
+                  alt="BTEHub Clean Professional AI Solutions" 
                   className="rounded-xl shadow-lg w-full h-full object-cover"
                 />
               </div>
