@@ -1,7 +1,9 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts"
 import { corsHeaders } from '../_shared/cors.ts'
+import { Resend } from "npm:resend@2.0.0"
 
 const GOOGLE_CALENDAR_API = 'https://www.googleapis.com/calendar/v3'
+const resend = new Resend(Deno.env.get('RESEND_API_KEY'))
 
 interface BookingRequest {
   clientName: string
@@ -141,6 +143,46 @@ async function createCalendarEvent(booking: BookingRequest, accessToken: string)
   return await response.json()
 }
 
+async function sendBookingNotification(booking: BookingRequest) {
+  try {
+    const emailResponse = await resend.emails.send({
+      from: "BTEHub Bookings <onboarding@resend.dev>",
+      to: ["admin@btehub.com"], // Replace with your actual email
+      subject: `New Consultation Booking - ${booking.serviceType}`,
+      html: `
+        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+          <h2 style="color: #2563eb;">New Consultation Booking</h2>
+          
+          <div style="background: #f8fafc; padding: 20px; border-radius: 8px; margin: 20px 0;">
+            <h3 style="margin-top: 0;">Client Details</h3>
+            <p><strong>Name:</strong> ${booking.clientName}</p>
+            <p><strong>Email:</strong> ${booking.clientEmail}</p>
+            ${booking.clientPhone ? `<p><strong>Phone:</strong> ${booking.clientPhone}</p>` : ''}
+          </div>
+          
+          <div style="background: #f8fafc; padding: 20px; border-radius: 8px; margin: 20px 0;">
+            <h3 style="margin-top: 0;">Booking Details</h3>
+            <p><strong>Service:</strong> ${booking.serviceType}</p>
+            <p><strong>Date:</strong> ${booking.preferredDate}</p>
+            <p><strong>Time:</strong> ${booking.preferredTime}</p>
+            ${booking.notes ? `<p><strong>Notes:</strong> ${booking.notes}</p>` : ''}
+          </div>
+          
+          <p style="color: #64748b; font-size: 14px;">
+            This booking has been automatically added to your Google Calendar.
+          </p>
+        </div>
+      `,
+    });
+
+    console.log("Booking notification sent successfully:", emailResponse);
+    return emailResponse;
+  } catch (error) {
+    console.error("Failed to send booking notification:", error);
+    throw error;
+  }
+}
+
 serve(async (req) => {
   // Handle CORS
   if (req.method === 'OPTIONS') {
@@ -155,6 +197,9 @@ serve(async (req) => {
     
     // Create calendar event
     const calendarEvent = await createCalendarEvent(booking, accessToken)
+    
+    // Send booking notification email
+    await sendBookingNotification(booking)
     
     return new Response(
       JSON.stringify({ 
