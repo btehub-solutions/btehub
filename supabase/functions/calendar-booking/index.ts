@@ -147,7 +147,7 @@ async function sendBookingNotification(booking: BookingRequest) {
   try {
     const emailResponse = await resend.emails.send({
       from: "BTEHub Bookings <onboarding@resend.dev>",
-      to: ["admin@btehub.com"], // Replace with your actual email
+      to: ["bensamoladoyin.btehub@gmail.com"],
       subject: `New Consultation Booking - ${booking.serviceType}`,
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
