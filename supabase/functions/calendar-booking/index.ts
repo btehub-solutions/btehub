@@ -201,11 +201,8 @@ serve(async (req) => {
   try {
     const booking: BookingRequest = await req.json()
     
-    // Get access token
-    const accessToken = await getAccessToken()
-    
-    // Create calendar event
-    const calendarEvent = await createCalendarEvent(booking, accessToken)
+    // Skip calendar creation for now - just send email notification
+    console.log('Processing booking for:', booking.clientName)
     
     // Send booking notification email
     await sendBookingNotification(booking)
@@ -213,8 +210,7 @@ serve(async (req) => {
     return new Response(
       JSON.stringify({ 
         success: true, 
-        eventId: calendarEvent.id,
-        eventLink: calendarEvent.htmlLink 
+        message: 'Booking notification sent successfully' 
       }),
       { 
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
