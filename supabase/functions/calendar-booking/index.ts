@@ -57,9 +57,18 @@ async function getAccessToken() {
   const signatureInput = `${encodedHeader}.${encodedPayload}`
   
   // Import private key
+  const cleanPrivateKey = credentials.private_key
+    .replace(/\\n/g, '\n')
+    .replace(/-----BEGIN PRIVATE KEY-----/, '')
+    .replace(/-----END PRIVATE KEY-----/, '')
+    .replace(/\s/g, '')
+  
+  // Convert base64 to binary
+  const binaryDer = Uint8Array.from(atob(cleanPrivateKey), c => c.charCodeAt(0))
+  
   const privateKey = await crypto.subtle.importKey(
     'pkcs8',
-    new TextEncoder().encode(credentials.private_key.replace(/\\n/g, '\n')),
+    binaryDer,
     {
       name: 'RSASSA-PKCS1-v1_5',
       hash: 'SHA-256'
