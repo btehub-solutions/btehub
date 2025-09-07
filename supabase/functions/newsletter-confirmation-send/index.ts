@@ -116,8 +116,8 @@ const handler = async (req: Request): Promise<Response> => {
       .from('newsletter_analytics')
       .insert({
         email,
-        event_type: 'confirmation_sent',
-        metadata: { subscription_id: subscriptionId }
+        event_type: 'opened',
+        metadata: { subscription_id: subscriptionId, action: 'confirmation_sent' }
       });
 
     return new Response(
