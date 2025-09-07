@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test Newsletter Send</title>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+    <h1>Newsletter Test</h1>
+    <button id="sendNewsletter">Send Test Newsletter</button>
+    <div id="result"></div>
+
+    <script>
+        const supabase = window.supabase.createClient(
+            'https://picdgrmhyvjoitttaoaj.supabase.co',
+            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBpY2Rncm1oeXZqb2l0dHRhb2FqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTUwNzgxOTksImV4cCI6MjA3MDY1NDE5OX0.GntA62R0uwdPJZTy0HuRLWoW3c-kuE35ygTdtwq5hhg'
+        );
+
+        document.getElementById('sendNewsletter').addEventListener('click', async () => {
+            console.log('Sending newsletter...');
+            document.getElementById('result').innerHTML = 'Sending...';
+            
+            try {
+                const response = await supabase.functions.invoke('newsletter-send', {
+                    body: { issueId: 'e3eabddf-8b16-4402-837d-73e4284314da' }
+                });
+                
+                console.log('Response:', response);
+                document.getElementById('result').innerHTML = `
+                    <h3>Result:</h3>
+                    <pre>${JSON.stringify(response, null, 2)}</pre>
+                `;
+            } catch (error) {
+                console.error('Error:', error);
+                document.getElementById('result').innerHTML = `
+                    <h3>Error:</h3>
+                    <pre>${JSON.stringify(error, null, 2)}</pre>
+                `;
+            }
+        });
+    </script>
+</body>
+</html>

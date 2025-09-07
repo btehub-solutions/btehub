@@ -235,6 +235,7 @@ export type Database = {
           email: string
           id: string
           status: string
+          unsubscribe_token: string | null
           unsubscribed_at: string | null
           updated_at: string
         }
@@ -245,6 +246,7 @@ export type Database = {
           email: string
           id?: string
           status?: string
+          unsubscribe_token?: string | null
           unsubscribed_at?: string | null
           updated_at?: string
         }
@@ -255,6 +257,7 @@ export type Database = {
           email?: string
           id?: string
           status?: string
+          unsubscribe_token?: string | null
           unsubscribed_at?: string | null
           updated_at?: string
         }
