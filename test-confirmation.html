@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test Newsletter Confirmation</title>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+    <h1>Newsletter Confirmation Test</h1>
+    <div>
+        <input type="email" id="testEmail" placeholder="Enter email to test" value="bensamoladoyin1@gmail.com">
+        <button id="sendConfirmation">Send Confirmation Email</button>
+    </div>
+    <div id="result"></div>
+
+    <script>
+        const supabase = window.supabase.createClient(
+            'https://picdgrmhyvjoitttaoaj.supabase.co',
+            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBpY2Rncm1oeXZqb2l0dHRhb2FqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTUwNzgxOTksImV4cCI6MjA3MDY1NDE5OX0.GntA62R0uwdPJZTy0HuRLWoW3c-kuE35ygTdtwq5hhg'
+        );
+
+        document.getElementById('sendConfirmation').addEventListener('click', async () => {
+            const email = document.getElementById('testEmail').value;
+            console.log('Sending confirmation to:', email);
+            document.getElementById('result').innerHTML = 'Sending confirmation email...';
+            
+            try {
+                const response = await supabase.functions.invoke('newsletter-confirmation-send', {
+                    body: { email: email }
+                });
+                
+                console.log('Confirmation response:', response);
+                document.getElementById('result').innerHTML = `
+                    <h3>Confirmation Result:</h3>
+                    <pre>${JSON.stringify(response, null, 2)}</pre>
+                `;
+            } catch (error) {
+                console.error('Confirmation error:', error);
+                document.getElementById('result').innerHTML = `
+                    <h3>Confirmation Error:</h3>
+                    <pre>${JSON.stringify(error, null, 2)}</pre>
+                `;
+            }
+        });
+    </script>
+</body>
+</html>
