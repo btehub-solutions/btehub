@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Debug Newsletter Confirmation</title>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+    <h1>Newsletter Confirmation Debug</h1>
+    
+    <div style="margin: 20px 0;">
+        <h3>Step 1: Check Subscription Status</h3>
+        <button id="checkStatus">Check bensamoladoyin1@gmail.com Status</button>
+        <div id="statusResult"></div>
+    </div>
+    
+    <div style="margin: 20px 0;">
+        <h3>Step 2: Send Direct Confirmation</h3>
+        <button id="sendDirect">Send Confirmation to bensamoladoyin1@gmail.com</button>
+        <div id="directResult"></div>
+    </div>
+    
+    <div style="margin: 20px 0;">
+        <h3>Step 3: Retrigger All Pending</h3>
+        <button id="retriggerAll">Retrigger All Pending Confirmations</button>
+        <div id="retriggerResult"></div>
+    </div>
+
+    <script>
+        const supabase = window.supabase.createClient(
+            'https://picdgrmhyvjoitttaoaj.supabase.co',
+            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBpY2Rncm1oeXZqb2l0dHRhb2FqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTUwNzgxOTksImV4cCI6MjA3MDY1NDE5OX0.GntA62R0uwdPJZTy0HuRLWoW3c-kuE35ygTdtwq5hhg'
+        );
+
+        // Check subscription status
+        document.getElementById('checkStatus').addEventListener('click', async () => {
+            try {
+                const { data, error } = await supabase
+                    .from('newsletter_subscriptions')
+                    .select('*')
+                    .eq('email', 'bensamoladoyin1@gmail.com');
+                
+                document.getElementById('statusResult').innerHTML = `
+                    <h4>Subscription Status:</h4>
+                    <pre>${JSON.stringify(data, null, 2)}</pre>
+                    ${error ? `<p style="color: red;">Error: ${error.message}</p>` : ''}
+                `;
+            } catch (error) {
+                document.getElementById('statusResult').innerHTML = `<p style="color: red;">Error: ${error.message}</p>`;
+            }
+        });
+
+        // Send direct confirmation
+        document.getElementById('sendDirect').addEventListener('click', async () => {
+            document.getElementById('directResult').innerHTML = 'Sending...';
+            try {
+                const response = await supabase.functions.invoke('newsletter-confirmation-send', {
+                    body: { email: 'bensamoladoyin1@gmail.com' }
+                });
+                
+                document.getElementById('directResult').innerHTML = `
+                    <h4>Direct Send Result:</h4>
+                    <pre>${JSON.stringify(response, null, 2)}</pre>
+                `;
+            } catch (error) {
+                document.getElementById('directResult').innerHTML = `<p style="color: red;">Error: ${error.message}</p>`;
+            }
+        });
+
+        // Retrigger all pending
+        document.getElementById('retriggerAll').addEventListener('click', async () => {
+            document.getElementById('retriggerResult').innerHTML = 'Processing...';
+            try {
+                const response = await supabase.functions.invoke('newsletter-retrigger-confirmations');
+                
+                document.getElementById('retriggerResult').innerHTML = `
+                    <h4>Retrigger Result:</h4>
+                    <pre>${JSON.stringify(response, null, 2)}</pre>
+                `;
+            } catch (error) {
+                document.getElementById('retriggerResult').innerHTML = `<p style="color: red;">Error: ${error.message}</p>`;
+            }
+        });
+    </script>
+</body>
+</html>
