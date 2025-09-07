@@ -12,118 +12,103 @@ const corsHeaders = {
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
 };
 
-interface SendConfirmationRequest {
-  email: string;
-}
-
 const handler = async (req: Request): Promise<Response> => {
   if (req.method === "OPTIONS") {
     return new Response(null, { headers: corsHeaders });
   }
 
   try {
-    const { email }: SendConfirmationRequest = await req.json();
+    // Get all pending subscriptions
+    const { data: pendingSubscriptions, error: fetchError } = await supabase
+      .from('newsletter_subscriptions')
+      .select('*')
+      .eq('status', 'pending');
 
-    if (!email) {
+    if (fetchError) throw fetchError;
+
+    if (!pendingSubscriptions || pendingSubscriptions.length === 0) {
       return new Response(
-        JSON.stringify({ error: "Email is required" }),
+        JSON.stringify({ message: "No pending subscriptions found" }),
         {
-          status: 400,
+          status: 200,
           headers: { "Content-Type": "application/json", ...corsHeaders },
         }
       );
     }
 
-    // Generate confirmation token
-    const confirmationToken = crypto.randomUUID();
-
-    // Check if subscription already exists
-    const { data: existingSub, error: checkError } = await supabase
-      .from('newsletter_subscriptions')
-      .select('*')
-      .eq('email', email)
-      .maybeSingle();
-
-    if (checkError) throw checkError;
-
-    let subscriptionId;
-
-    if (existingSub) {
-      if (existingSub.status === 'confirmed') {
-        return new Response(
-          JSON.stringify({ message: "Email already confirmed" }),
-          {
-            status: 200,
-            headers: { "Content-Type": "application/json", ...corsHeaders },
-          }
-        );
-      }
-
-      // Update existing subscription with new token
-      const { error: updateError } = await supabase
-        .from('newsletter_subscriptions')
-        .update({ confirmation_token: confirmationToken })
-        .eq('email', email);
-
-      if (updateError) throw updateError;
-      subscriptionId = existingSub.id;
-    } else {
-      // Create new subscription
-      const { data: newSub, error: insertError } = await supabase
-        .from('newsletter_subscriptions')
-        .insert({
-          email,
-          confirmation_token: confirmationToken,
-          status: 'pending'
-        })
-        .select()
-        .single();
-
-      if (insertError) throw insertError;
-      subscriptionId = newSub.id;
-    }
-
-    // Send confirmation email
-    const confirmationUrl = `${supabaseUrl}/functions/v1/newsletter-confirm?token=${confirmationToken}`;
+    const results = [];
     
-    // Try btehub.com first, fallback to onboarding@resend.dev if domain not verified
-    let emailResponse;
-    try {
-      emailResponse = await resend.emails.send({
-        from: "BTEHub Newsletter <newsletter@btehub.com>",
-        to: [email],
-        subject: "Confirm your BTEHub newsletter subscription",
-        html: generateConfirmationEmail(confirmationUrl),
-      });
-    } catch (error: any) {
-      if (error.message?.includes('domain is not verified')) {
-        console.log('btehub.com domain not verified, using fallback sender');
-        emailResponse = await resend.emails.send({
-          from: "BTEHub Newsletter <onboarding@resend.dev>",
-          to: [email],
-          subject: "Confirm your BTEHub newsletter subscription",
-          html: generateConfirmationEmail(confirmationUrl),
+    for (const subscription of pendingSubscriptions) {
+      try {
+        // Generate new confirmation token
+        const confirmationToken = crypto.randomUUID();
+        
+        // Update subscription with new token
+        const { error: updateError } = await supabase
+          .from('newsletter_subscriptions')
+          .update({ confirmation_token: confirmationToken })
+          .eq('id', subscription.id);
+
+        if (updateError) throw updateError;
+
+        // Send confirmation email
+        const confirmationUrl = `${supabaseUrl}/functions/v1/newsletter-confirm?token=${confirmationToken}`;
+        
+        // Try btehub.com first, fallback to onboarding@resend.dev if domain not verified
+        let emailResponse;
+        try {
+          emailResponse = await resend.emails.send({
+            from: "BTEHub Newsletter <newsletter@btehub.com>",
+            to: [subscription.email],
+            subject: "Confirm your BTEHub newsletter subscription",
+            html: generateConfirmationEmail(confirmationUrl),
+          });
+        } catch (error: any) {
+          if (error.message?.includes('domain is not verified')) {
+            console.log('btehub.com domain not verified, using fallback sender');
+            emailResponse = await resend.emails.send({
+              from: "BTEHub Newsletter <onboarding@resend.dev>",
+              to: [subscription.email],
+              subject: "Confirm your BTEHub newsletter subscription",
+              html: generateConfirmationEmail(confirmationUrl),
+            });
+          } else {
+            throw error;
+          }
+        }
+
+        console.log(`Confirmation email sent to ${subscription.email}:`, emailResponse);
+
+        // Track analytics
+        await supabase
+          .from('newsletter_analytics')
+          .insert({
+            email: subscription.email,
+            event_type: 'confirmation_resent',
+            metadata: { subscription_id: subscription.id }
+          });
+
+        results.push({
+          email: subscription.email,
+          status: 'sent',
+          emailResponse
         });
-      } else {
-        throw error;
+
+      } catch (error: any) {
+        console.error(`Failed to send confirmation to ${subscription.email}:`, error);
+        results.push({
+          email: subscription.email,
+          status: 'failed',
+          error: error.message
+        });
       }
     }
-
-    console.log("Confirmation email sent:", emailResponse);
-
-    // Track analytics
-    await supabase
-      .from('newsletter_analytics')
-      .insert({
-        email,
-        event_type: 'confirmation_sent',
-        metadata: { subscription_id: subscriptionId }
-      });
 
     return new Response(
       JSON.stringify({ 
         success: true, 
-        message: "Confirmation email sent successfully" 
+        message: `Processed ${pendingSubscriptions.length} pending subscriptions`,
+        results
       }),
       {
         status: 200,
@@ -132,7 +117,7 @@ const handler = async (req: Request): Promise<Response> => {
     );
 
   } catch (error: any) {
-    console.error("Confirmation send error:", error);
+    console.error("Retrigger confirmations error:", error);
     return new Response(
       JSON.stringify({ error: error.message }),
       {

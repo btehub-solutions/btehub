@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test Newsletter Retrigger</title>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+    <h1>Newsletter Confirmation Retrigger Test</h1>
+    <div>
+        <button id="retriggerConfirmations">Send Confirmations to All Pending Subscribers</button>
+    </div>
+    <div id="result"></div>
+
+    <script>
+        const supabase = window.supabase.createClient(
+            'https://picdgrmhyvjoitttaoaj.supabase.co',
+            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBpY2Rncm1oeXZqb2l0dHRhb2FqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTUwNzgxOTksImV4cCI6MjA3MDY1NDE5OX0.GntA62R0uwdPJZTy0HuRLWoW3c-kuE35ygTdtwq5hhg'
+        );
+
+        document.getElementById('retriggerConfirmations').addEventListener('click', async () => {
+            console.log('Retriggering confirmations for all pending subscribers...');
+            document.getElementById('result').innerHTML = 'Processing pending subscriptions...';
+            
+            try {
+                const response = await supabase.functions.invoke('newsletter-retrigger-confirmations');
+                
+                console.log('Retrigger response:', response);
+                document.getElementById('result').innerHTML = `
+                    <h3>Retrigger Result:</h3>
+                    <pre>${JSON.stringify(response, null, 2)}</pre>
+                `;
+            } catch (error) {
+                console.error('Retrigger error:', error);
+                document.getElementById('result').innerHTML = `
+                    <h3>Retrigger Error:</h3>
+                    <pre>${JSON.stringify(error, null, 2)}</pre>
+                `;
+            }
+        });
+    </script>
+</body>
+</html>
