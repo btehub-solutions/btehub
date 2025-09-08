@@ -3,8 +3,9 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { Mail, Phone, MapPin, Send, CheckCircle } from "lucide-react";
+import { Mail, Phone, MapPin, Send, CheckCircle, ArrowRight } from "lucide-react";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -206,27 +207,19 @@ const Contact = () => {
                   </div>
 
                   <Button 
-                    type="submit" 
+                    asChild
                     variant="professional" 
                     size="xl" 
-                    disabled={isSubmitting}
                     className="w-full group"
                   >
-                    {isSubmitting ? (
-                      <>
-                        <div className="w-5 h-5 border-2 border-primary-foreground border-t-transparent rounded-full animate-spin mr-2"></div>
-                        Sending Message...
-                      </>
-                    ) : (
-                      <>
-                        Start AI Transformation
-                        <Send className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
-                      </>
-                    )}
+                    <Link to="/book">
+                      Start AI Transformation
+                      <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
+                    </Link>
                   </Button>
 
                   <p className="text-sm text-muted-foreground text-center">
-                    We'll respond within 2 hours with a detailed proposal tailored to your needs.
+                    You'll be taken to our booking page to schedule your consultation.
                   </p>
                 </form>
               ) : (
