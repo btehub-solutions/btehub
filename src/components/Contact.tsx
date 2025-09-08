@@ -3,9 +3,9 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { Mail, Phone, MapPin, Send, CheckCircle, ArrowRight } from "lucide-react";
+import { Mail, Phone, MapPin, Send, CheckCircle } from "lucide-react";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { supabase } from "@/integrations/supabase/client";
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -39,23 +39,38 @@ const Contact = () => {
 
     setIsSubmitting(true);
     
-    // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 2000));
-    
-    setIsSubmitting(false);
-    setIsSubmitted(true);
-    
-    // Reset form after success
-    setTimeout(() => {
-      setFormData({
-        firstName: '',
-        lastName: '',
-        email: '',
-        interest: '',
-        message: ''
+    try {
+      const { error } = await supabase.functions.invoke('contact-form', {
+        body: {
+          firstName: formData.firstName,
+          lastName: formData.lastName,
+          email: formData.email,
+          interest: formData.interest,
+          message: formData.message
+        }
       });
-      setIsSubmitted(false);
-    }, 3000);
+
+      if (error) throw error;
+
+      setIsSubmitted(true);
+      
+      // Reset form after success
+      setTimeout(() => {
+        setFormData({
+          firstName: '',
+          lastName: '',
+          email: '',
+          interest: '',
+          message: ''
+        });
+        setIsSubmitted(false);
+      }, 3000);
+    } catch (error) {
+      console.error('Error sending contact form:', error);
+      // You could add error handling UI here
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleInputChange = (field: string, value: string) => {
@@ -207,19 +222,27 @@ const Contact = () => {
                   </div>
 
                   <Button 
-                    asChild
+                    type="submit" 
                     variant="professional" 
                     size="xl" 
+                    disabled={isSubmitting}
                     className="w-full group"
                   >
-                    <Link to="/book">
-                      Start AI Transformation
-                      <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
-                    </Link>
+                    {isSubmitting ? (
+                      <>
+                        <div className="w-5 h-5 border-2 border-primary-foreground border-t-transparent rounded-full animate-spin mr-2"></div>
+                        Sending Message...
+                      </>
+                    ) : (
+                      <>
+                        Start AI Transformation
+                        <Send className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
+                      </>
+                    )}
                   </Button>
 
                   <p className="text-sm text-muted-foreground text-center">
-                    You'll be taken to our booking page to schedule your consultation.
+                    We'll respond within 2 hours with a detailed proposal tailored to your needs.
                   </p>
                 </form>
               ) : (
