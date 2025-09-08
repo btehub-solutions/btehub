@@ -1,45 +1,49 @@
 import { Card } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { Mail, TrendingUp, Zap } from "lucide-react";
-import { useState } from "react";
-import { useToast } from "@/components/ui/use-toast";
-import { supabase } from "@/integrations/supabase/client";
 
 const Newsletter = () => {
-  const [email, setEmail] = useState("");
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const { toast } = useToast();
-
-  const handleSubscribe = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!email) return;
-
-    setIsSubmitting(true);
-    try {
-      // Send confirmation email instead of direct subscription
-      const response = await supabase.functions.invoke('newsletter-confirmation-send', {
-        body: { email }
-      });
-
-      if (response.error) throw response.error;
-
-      toast({
-        title: "Check your email!",
-        description: "We've sent you a confirmation link to complete your subscription.",
-      });
-      setEmail("");
-    } catch (error) {
-      console.error('Subscription error:', error);
-      toast({
-        title: "Error",
-        description: "Failed to send confirmation email. Please try again later.",
-        variant: "destructive",
-      });
-    } finally {
-      setIsSubmitting(false);
-    }
+  // Generate dynamic AI highlights based on current date
+  const getDynamicHighlights = () => {
+    const today = new Date();
+    const dayOfYear = Math.floor((today.getTime() - new Date(today.getFullYear(), 0, 0).getTime()) / (1000 * 60 * 60 * 24));
+    
+    const highlightSets = [
+      [
+        "AI Automation Boom: New no-code AI tools are making automation accessible to small businesses, reducing operational costs by up to 40%.",
+        "ChatGPT for Business: OpenAI announced enhanced enterprise features that help companies create custom AI assistants in minutes.",
+        "AI Content Creation: Video generation AI reached new quality levels, opening opportunities for creators and marketers worldwide.",
+        "Freelancer Success: AI consultants are reporting 300% income increases by offering AI implementation services to local businesses."
+      ],
+      [
+        "AI-Powered Analytics: Machine learning tools now predict customer behavior with 95% accuracy, revolutionizing marketing strategies.",
+        "Voice AI Revolution: Real-time voice translation is breaking language barriers in global business communications.",
+        "AI Writing Tools: Content creators are boosting productivity by 250% using advanced AI writing assistants for social media and blogs.",
+        "Smart Customer Service: AI chatbots are handling 80% of customer inquiries, freeing up human agents for complex issues."
+      ],
+      [
+        "AI Image Generation: Photographers and designers are expanding their services using AI to create custom visuals in seconds.",
+        "Personalized Learning: AI tutoring platforms are helping professionals upskill 3x faster than traditional methods.",
+        "Financial AI: Small businesses are using AI accounting tools to reduce bookkeeping time by 70% and improve accuracy.",
+        "AI Sales Tools: Sales teams are closing 40% more deals using AI-powered lead scoring and personalized outreach."
+      ],
+      [
+        "AI Code Generation: Non-technical entrepreneurs are building apps and websites using AI coding assistants.",
+        "Smart Inventory: Retailers are reducing waste by 30% using AI to predict demand and optimize stock levels.",
+        "AI Health Tech: Wellness coaches are offering personalized AI-driven fitness and nutrition plans to clients.",
+        "Creative AI: Artists and musicians are monetizing AI-generated content across multiple platforms."
+      ],
+      [
+        "AI Email Marketing: Marketers are seeing 180% higher open rates using AI to personalize email campaigns.",
+        "Virtual Assistants: Entrepreneurs are delegating complex tasks to AI, focusing on high-value strategic work.",
+        "AI Data Analysis: Business analysts are processing months of data in hours using advanced AI analytics tools.",
+        "Social Media AI: Content creators are growing followers 5x faster using AI to optimize posting times and content."
+      ]
+    ];
+    
+    return highlightSets[dayOfYear % highlightSets.length];
   };
+
+  const highlights = getDynamicHighlights();
 
   return (
     <section className="py-20 bg-gradient-to-b from-background to-secondary/20">
@@ -70,22 +74,12 @@ const Newsletter = () => {
                   This Week's AI Highlights
                 </h3>
                 <ul className="space-y-3 text-muted-foreground">
-                  <li className="flex items-start gap-3">
-                    <span className="text-primary font-bold">•</span>
-                    <span><strong>AI Automation Boom:</strong> New no-code AI tools are making automation accessible to small businesses, reducing operational costs by up to 40%.</span>
-                  </li>
-                  <li className="flex items-start gap-3">
-                    <span className="text-primary font-bold">•</span>
-                    <span><strong>ChatGPT for Business:</strong> OpenAI announced enhanced enterprise features that help companies create custom AI assistants in minutes.</span>
-                  </li>
-                  <li className="flex items-start gap-3">
-                    <span className="text-primary font-bold">•</span>
-                    <span><strong>AI Content Creation:</strong> Video generation AI reached new quality levels, opening opportunities for creators and marketers worldwide.</span>
-                  </li>
-                  <li className="flex items-start gap-3">
-                    <span className="text-primary font-bold">•</span>
-                    <span><strong>Freelancer Success:</strong> AI consultants are reporting 300% income increases by offering AI implementation services to local businesses.</span>
-                  </li>
+                  {highlights.map((highlight, index) => (
+                    <li key={index} className="flex items-start gap-3">
+                      <span className="text-primary font-bold">•</span>
+                      <span><strong>{highlight.split(':')[0]}:</strong>{highlight.split(':').slice(1).join(':')}</span>
+                    </li>
+                  ))}
                 </ul>
               </div>
 
@@ -118,32 +112,6 @@ const Newsletter = () => {
             </div>
           </Card>
 
-          {/* Newsletter Subscription */}
-          <Card className="p-8 text-center bg-gradient-to-r from-primary/5 to-secondary/20 border-primary/30">
-            <h3 className="text-2xl font-bold text-foreground mb-4">
-              Join 10,000+ AI Enthusiasts
-            </h3>
-            <p className="text-muted-foreground mb-6 max-w-lg mx-auto">
-              Get weekly AI insights, practical tutorials, and income opportunities delivered to your inbox every Tuesday.
-            </p>
-            <form onSubmit={handleSubscribe} className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
-              <Input
-                type="email"
-                placeholder="Enter your email address"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                className="flex-1"
-                required
-              />
-              <Button type="submit" className="sm:w-auto" disabled={isSubmitting}>
-                {isSubmitting ? "Sending..." : "Subscribe Free"}
-              </Button>
-            </form>
-            <p className="text-xs text-muted-foreground mt-4">
-              No spam. Unsubscribe anytime. 
-              <a href="/newsletter/archive" className="text-primary hover:underline ml-1">View past issues</a>
-            </p>
-          </Card>
         </div>
       </div>
     </section>
