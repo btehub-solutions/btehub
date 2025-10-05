@@ -101,13 +101,19 @@ const About = () => {
                   Ben Sam Oladoyin
                 </h4>
                 <p className="text-muted-foreground leading-relaxed mb-4">
-                  Ben Sam Oladoyin is the visionary founder of BTEHub Solutions, bringing a unique blend of technical expertise and creative innovation to the AI landscape. With extensive experience in Live Audio Engineering, Ben has seamlessly transitioned into the world of artificial intelligence, where he now operates at the intersection of Prompt Engineering, Chatbot Development, and AI Automation Agencies (AAA).
+                  BTEHub is an AI innovation agency built on passion, creativity, and problem-solving. We exist to design and deploy AI-driven solutions that transform industries, empower businesses, and create real impact across communities.
                 </p>
                 <p className="text-muted-foreground leading-relaxed mb-4">
-                  Known for his calm, focused, and adaptable approach, Ben is passionate about helping businesses and creators harness the transformative power of AI tools, automation, and intelligent chatbots. His philosophy centers on practical teaching, creativity, and real-world applications that boost productivity, streamline processes, and create exceptional user experiences.
+                  Founded by Ben Sam Oladoyin, a forward-thinking innovator at the intersection of AI, Chatbot development, automation, training and business solutions, BTEHub is on a mission to become one of the leading AI agencies in Nigeria and beyond.
+                </p>
+                <p className="text-muted-foreground leading-relaxed mb-4">
+                  To achieve this vision, Ben and the BTEHub team are building a strong network of AI innovators and actively seeking sponsorships, partnerships, mentorship, funding, strategic collaborations, advisory support, visibility opportunities, and access to cutting-edge tools and infrastructure that will help the agency scale.
+                </p>
+                <p className="text-muted-foreground leading-relaxed mb-4">
+                  At BTEHub, we don't just build technology — we create practical, income-generating solutions that empower individuals, businesses, and communities to thrive in the AI-powered future.
                 </p>
                 <p className="text-muted-foreground leading-relaxed">
-                  Under Ben's leadership, BTEHub Solutions continues to shape the future of AI-driven business solutions, empowering organizations to thrive in an increasingly intelligent digital landscape. His commitment to innovation and practical excellence drives every solution the company delivers.
+                  Beyond innovation, Ben is also leading the growth of a vibrant community where AI insights, resources, and free training opportunities are shared to help more people step into the future with confidence.
                 </p>
               </div>
             </div>
