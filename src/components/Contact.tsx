@@ -6,9 +6,12 @@ import { Textarea } from "@/components/ui/textarea";
 import { Mail, Phone, MapPin, Send, CheckCircle } from "lucide-react";
 import { useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
+import { contactFormSchema, sanitizeInput, type ContactFormData } from "@/lib/validation";
+import { useToast } from "@/hooks/use-toast";
 
 const Contact = () => {
-  const [formData, setFormData] = useState({
+  const { toast } = useToast();
+  const [formData, setFormData] = useState<ContactFormData>({
     firstName: '',
     lastName: '',
     email: '',
@@ -19,40 +22,47 @@ const Contact = () => {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
 
-  const validateForm = () => {
-    const newErrors: Record<string, string> = {};
-    
-    if (!formData.firstName.trim()) newErrors.firstName = 'First name is required';
-    if (!formData.lastName.trim()) newErrors.lastName = 'Last name is required';
-    if (!formData.email.trim()) newErrors.email = 'Email is required';
-    else if (!/\S+@\S+\.\S+/.test(formData.email)) newErrors.email = 'Please enter a valid email';
-    if (!formData.message.trim()) newErrors.message = 'Project details are required';
-
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
-  };
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setErrors({});
     
-    if (!validateForm()) return;
+    // Sanitize all inputs
+    const sanitizedData = {
+      firstName: sanitizeInput(formData.firstName),
+      lastName: sanitizeInput(formData.lastName),
+      email: sanitizeInput(formData.email),
+      interest: sanitizeInput(formData.interest || ''),
+      message: sanitizeInput(formData.message)
+    };
+
+    // Validate with zod
+    const validation = contactFormSchema.safeParse(sanitizedData);
+    
+    if (!validation.success) {
+      const newErrors: Record<string, string> = {};
+      validation.error.errors.forEach((err) => {
+        if (err.path[0]) {
+          newErrors[err.path[0] as string] = err.message;
+        }
+      });
+      setErrors(newErrors);
+      return;
+    }
 
     setIsSubmitting(true);
     
     try {
       const { error } = await supabase.functions.invoke('contact-form', {
-        body: {
-          firstName: formData.firstName,
-          lastName: formData.lastName,
-          email: formData.email,
-          interest: formData.interest,
-          message: formData.message
-        }
+        body: validation.data
       });
 
       if (error) throw error;
 
       setIsSubmitted(true);
+      toast({
+        title: "Message sent successfully!",
+        description: "We'll get back to you within 2 hours.",
+      });
       
       // Reset form after success
       setTimeout(() => {
@@ -66,8 +76,11 @@ const Contact = () => {
         setIsSubmitted(false);
       }, 3000);
     } catch (error) {
-      console.error('Error sending contact form:', error);
-      // You could add error handling UI here
+      toast({
+        title: "Error sending message",
+        description: "Please try again or contact us directly via email.",
+        variant: "destructive",
+      });
     } finally {
       setIsSubmitting(false);
     }

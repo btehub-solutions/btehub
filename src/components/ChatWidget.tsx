@@ -6,6 +6,7 @@ import { Card } from '@/components/ui/card';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Badge } from '@/components/ui/badge';
 import { supabase } from '@/integrations/supabase/client';
+import { chatMessageSchema, sanitizeInput } from '@/lib/validation';
 
 interface Message {
   role: 'user' | 'assistant';
@@ -53,7 +54,20 @@ const ChatWidget = () => {
   const sendMessage = async () => {
     if (!inputMessage.trim() || isLoading) return;
 
-    const userMessage = inputMessage.trim();
+    // Sanitize and validate input
+    const sanitized = sanitizeInput(inputMessage);
+    const validation = chatMessageSchema.safeParse({ message: sanitized });
+    
+    if (!validation.success) {
+      setMessages(prev => [...prev, {
+        role: 'assistant',
+        content: "Please enter a valid message (max 1000 characters).",
+        timestamp: new Date()
+      }]);
+      return;
+    }
+
+    const userMessage = validation.data.message;
     setInputMessage('');
     setIsLoading(true);
 

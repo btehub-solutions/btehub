@@ -1,5 +1,6 @@
 import React from 'react';
 import { useEffect } from 'react';
+import { logger } from '@/lib/logger';
 
 // Professional loading and performance enhancements
 export const ProfessionalEnhancements = () => {
@@ -85,7 +86,7 @@ export class ErrorBoundary extends React.Component<
   }
 
   componentDidCatch(error: Error, errorInfo: React.ErrorInfo) {
-    console.error('Error caught by boundary:', error, errorInfo);
+    logger.error('Error caught by boundary:', error, errorInfo);
   }
 
   render() {

@@ -10,11 +10,12 @@ import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { CalendarDays, Clock, User, Mail, Phone, MessageSquare } from "lucide-react";
 import { format } from "date-fns";
+import { bookingFormSchema, sanitizeInput, type BookingFormData } from "@/lib/validation";
 
 const BookingCalendar = () => {
   const [selectedDate, setSelectedDate] = useState<Date>();
   const [selectedTime, setSelectedTime] = useState<string>("");
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<BookingFormData>({
     name: "",
     email: "",
     phone: "",
@@ -23,6 +24,7 @@ const BookingCalendar = () => {
   });
   const [isLoading, setIsLoading] = useState(false);
   const [availableSlots, setAvailableSlots] = useState<string[]>([]);
+  const [errors, setErrors] = useState<Record<string, string>>({});
   const { toast } = useToast();
 
   // Generate available time slots for the selected date
@@ -41,11 +43,40 @@ const BookingCalendar = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setErrors({});
     
-    if (!selectedDate || !selectedTime || !formData.name || !formData.email || !formData.serviceType) {
+    if (!selectedDate || !selectedTime) {
       toast({
         title: "Missing Information",
-        description: "Please fill in all required fields and select a date and time.",
+        description: "Please select both date and time.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    // Sanitize all inputs
+    const sanitizedData = {
+      name: sanitizeInput(formData.name),
+      email: sanitizeInput(formData.email),
+      phone: sanitizeInput(formData.phone),
+      serviceType: sanitizeInput(formData.serviceType),
+      notes: sanitizeInput(formData.notes || ''),
+    };
+
+    // Validate with zod
+    const validation = bookingFormSchema.safeParse(sanitizedData);
+    
+    if (!validation.success) {
+      const newErrors: Record<string, string> = {};
+      validation.error.errors.forEach((err) => {
+        if (err.path[0]) {
+          newErrors[err.path[0] as string] = err.message;
+        }
+      });
+      setErrors(newErrors);
+      toast({
+        title: "Validation Error",
+        description: "Please fix the errors in the form.",
         variant: "destructive",
       });
       return;
@@ -58,13 +89,13 @@ const BookingCalendar = () => {
       const { data: bookingData, error: dbError } = await supabase
         .from('bookings')
         .insert({
-          client_name: formData.name,
-          client_email: formData.email,
-          client_phone: formData.phone || null,
-          service_type: formData.serviceType,
+          client_name: validation.data.name,
+          client_email: validation.data.email,
+          client_phone: validation.data.phone || null,
+          service_type: validation.data.serviceType,
           preferred_date: format(selectedDate, 'yyyy-MM-dd'),
           preferred_time: selectedTime,
-          notes: formData.notes || null,
+          notes: validation.data.notes || null,
           status: 'pending'
         })
         .select()
@@ -76,13 +107,13 @@ const BookingCalendar = () => {
       try {
         const calendarResponse = await supabase.functions.invoke('calendar-booking', {
           body: {
-            clientName: formData.name,
-            clientEmail: formData.email,
-            clientPhone: formData.phone,
-            serviceType: formData.serviceType,
+            clientName: validation.data.name,
+            clientEmail: validation.data.email,
+            clientPhone: validation.data.phone,
+            serviceType: validation.data.serviceType,
             preferredDate: format(selectedDate, 'yyyy-MM-dd'),
             preferredTime: selectedTime,
-            notes: formData.notes
+            notes: validation.data.notes
           }
         });
 
@@ -116,6 +147,7 @@ const BookingCalendar = () => {
       });
       setSelectedDate(undefined);
       setSelectedTime("");
+      setErrors({});
     } catch (error) {
       console.error('Error submitting booking:', error);
       toast({
@@ -210,9 +242,13 @@ const BookingCalendar = () => {
                     <Input
                       id="name"
                       value={formData.name}
-                      onChange={(e) => setFormData(prev => ({ ...prev, name: e.target.value }))}
-                      required
+                      onChange={(e) => {
+                        setFormData(prev => ({ ...prev, name: e.target.value }));
+                        if (errors.name) setErrors(prev => ({ ...prev, name: '' }));
+                      }}
+                      className={errors.name ? 'border-destructive' : ''}
                     />
+                    {errors.name && <p className="text-destructive text-sm mt-1">{errors.name}</p>}
                   </div>
                   <div>
                     <Label htmlFor="email" className="flex items-center gap-2">
@@ -223,28 +259,43 @@ const BookingCalendar = () => {
                       id="email"
                       type="email"
                       value={formData.email}
-                      onChange={(e) => setFormData(prev => ({ ...prev, email: e.target.value }))}
-                      required
+                      onChange={(e) => {
+                        setFormData(prev => ({ ...prev, email: e.target.value }));
+                        if (errors.email) setErrors(prev => ({ ...prev, email: '' }));
+                      }}
+                      className={errors.email ? 'border-destructive' : ''}
                     />
+                    {errors.email && <p className="text-destructive text-sm mt-1">{errors.email}</p>}
                   </div>
                 </div>
 
                 <div>
                   <Label htmlFor="phone" className="flex items-center gap-2">
                     <Phone className="h-4 w-4" />
-                    Phone Number
+                    Phone Number *
                   </Label>
                   <Input
                     id="phone"
                     value={formData.phone}
-                    onChange={(e) => setFormData(prev => ({ ...prev, phone: e.target.value }))}
+                    onChange={(e) => {
+                      setFormData(prev => ({ ...prev, phone: e.target.value }));
+                      if (errors.phone) setErrors(prev => ({ ...prev, phone: '' }));
+                    }}
+                    className={errors.phone ? 'border-destructive' : ''}
                   />
+                  {errors.phone && <p className="text-destructive text-sm mt-1">{errors.phone}</p>}
                 </div>
 
                 <div>
                   <Label htmlFor="serviceType">Service Interest *</Label>
-                  <Select value={formData.serviceType} onValueChange={(value) => setFormData(prev => ({ ...prev, serviceType: value }))}>
-                    <SelectTrigger>
+                  <Select 
+                    value={formData.serviceType} 
+                    onValueChange={(value) => {
+                      setFormData(prev => ({ ...prev, serviceType: value }));
+                      if (errors.serviceType) setErrors(prev => ({ ...prev, serviceType: '' }));
+                    }}
+                  >
+                    <SelectTrigger className={errors.serviceType ? 'border-destructive' : ''}>
                       <SelectValue placeholder="Select a service" />
                     </SelectTrigger>
                     <SelectContent>
@@ -255,6 +306,7 @@ const BookingCalendar = () => {
                       <SelectItem value="custom-ai-solutions">Custom AI Solutions</SelectItem>
                     </SelectContent>
                   </Select>
+                  {errors.serviceType && <p className="text-destructive text-sm mt-1">{errors.serviceType}</p>}
                 </div>
 
                 <div>
@@ -266,9 +318,14 @@ const BookingCalendar = () => {
                     id="notes"
                     placeholder="Tell us about your project, goals, and any specific requirements..."
                     value={formData.notes}
-                    onChange={(e) => setFormData(prev => ({ ...prev, notes: e.target.value }))}
+                    onChange={(e) => {
+                      setFormData(prev => ({ ...prev, notes: e.target.value }));
+                      if (errors.notes) setErrors(prev => ({ ...prev, notes: '' }));
+                    }}
                     rows={4}
+                    className={errors.notes ? 'border-destructive' : ''}
                   />
+                  {errors.notes && <p className="text-destructive text-sm mt-1">{errors.notes}</p>}
                 </div>
 
                 <Button
