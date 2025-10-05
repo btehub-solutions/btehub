@@ -87,7 +87,7 @@ const About = () => {
               <div className="lg:col-span-1 flex justify-center">
                 <div className="w-64 h-64 rounded-xl overflow-hidden shadow-lg">
                   <img 
-                    src="/lovable-uploads/25a1717a-5999-45c3-8dc4-9818931ad575.png" 
+                    src="/lovable-uploads/founder-ben-sam.jpeg" 
                     alt="Ben Sam Oladoyin - Founder of BTEHub Solutions" 
                     className="w-full h-full object-cover"
                   />
