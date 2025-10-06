@@ -7,6 +7,7 @@ import { ScrollArea } from '@/components/ui/scroll-area';
 import { Badge } from '@/components/ui/badge';
 import { supabase } from '@/integrations/supabase/client';
 import { chatMessageSchema, sanitizeInput } from '@/lib/validation';
+import { formatChatMessage } from '@/lib/textFormatting';
 
 interface Message {
   role: 'user' | 'assistant';
@@ -177,13 +178,15 @@ const ChatWidget = () => {
                     </div>
                   )}
                   <div
-                    className={`max-w-[80%] p-3 rounded-lg text-sm ${
+                    className={`max-w-[80%] p-3 rounded-lg text-sm leading-relaxed ${
                       message.role === 'user'
                         ? 'bg-primary text-primary-foreground ml-auto'
                         : 'bg-muted text-muted-foreground'
                     }`}
                   >
-                    {message.content}
+                    <div className="whitespace-pre-line">
+                      {formatChatMessage(message.content)}
+                    </div>
                   </div>
                   {message.role === 'user' && (
                     <div className="h-8 w-8 rounded-full bg-accent/10 flex items-center justify-center flex-shrink-0">
