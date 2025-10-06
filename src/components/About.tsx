@@ -76,6 +76,7 @@ const About = () => {
                   src={cleanProfessionalAi} 
                   alt="BTEHub Clean Professional AI Solutions" 
                   className="rounded-xl shadow-lg w-full h-full object-cover"
+                  loading="lazy"
                 />
               </div>
             </div>
@@ -90,6 +91,7 @@ const About = () => {
                     src="/lovable-uploads/founder-ben-sam.jpeg" 
                     alt="Ben Sam Oladoyin - Founder of BTEHub Solutions" 
                     className="w-full h-full object-cover"
+                    loading="lazy"
                   />
                 </div>
               </div>
