@@ -8,6 +8,8 @@ import Index from "./pages/Index";
 import Book from "./pages/Book";
 import Admin from "./pages/Admin";
 import NewsletterArchive from "./pages/NewsletterArchive";
+import Portfolio from "./pages/Portfolio";
+import Pricing from "./pages/Pricing";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient({
@@ -32,6 +34,8 @@ const App = () => (
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/book" element={<Book />} />
+            <Route path="/portfolio" element={<Portfolio />} />
+            <Route path="/pricing" element={<Pricing />} />
             <Route path="/admin" element={<Admin />} />
             <Route path="/newsletter/archive" element={<NewsletterArchive />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}

@@ -38,6 +38,18 @@ const Header = () => {
             >
               Services
             </button>
+            <Link 
+              to="/portfolio" 
+              className="text-muted-foreground hover:text-primary transition-colors duration-300 font-medium"
+            >
+              Portfolio
+            </Link>
+            <Link 
+              to="/pricing" 
+              className="text-muted-foreground hover:text-primary transition-colors duration-300 font-medium"
+            >
+              Pricing
+            </Link>
             <button 
               onClick={() => scrollToSection('about')} 
               className="text-muted-foreground hover:text-primary transition-colors duration-300 font-medium"
@@ -81,6 +93,20 @@ const Header = () => {
               >
                 Services
               </button>
+              <Link 
+                to="/portfolio"
+                onClick={() => setIsMenuOpen(false)}
+                className="text-muted-foreground hover:text-primary transition-colors text-left font-medium py-2"
+              >
+                Portfolio
+              </Link>
+              <Link 
+                to="/pricing"
+                onClick={() => setIsMenuOpen(false)}
+                className="text-muted-foreground hover:text-primary transition-colors text-left font-medium py-2"
+              >
+                Pricing
+              </Link>
               <button 
                 onClick={() => scrollToSection('about')} 
                 className="text-muted-foreground hover:text-primary transition-colors text-left font-medium py-2"
