@@ -5,6 +5,9 @@ import { ArrowRight, CheckCircle2 } from "lucide-react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Link } from "react-router-dom";
+import ecommerceImage from "@/assets/portfolio-ecommerce-chatbot.jpg";
+import educationImage from "@/assets/portfolio-education-ai.jpg";
+import healthcareImage from "@/assets/portfolio-healthcare-automation.jpg";
 
 const portfolioProjects = [
   {
@@ -19,7 +22,7 @@ const portfolioProjects = [
       "35% boost in conversion rates"
     ],
     technologies: ["GPT-4", "Custom NLP", "Multi-channel Integration"],
-    image: "/lovable-uploads/25a1717a-5999-45c3-8dc4-9818931ad575.png"
+    image: ecommerceImage
   },
   {
     title: "Educational Platform AI Assistant",
@@ -33,7 +36,7 @@ const portfolioProjects = [
       "Reduced teacher administrative time by 40%"
     ],
     technologies: ["Machine Learning", "Adaptive Learning AI", "Analytics Dashboard"],
-    image: "/lovable-uploads/bfff88e2-12c6-4549-beaa-a63c637758e0.png"
+    image: educationImage
   },
   {
     title: "Healthcare Appointment Automation",
@@ -47,7 +50,7 @@ const portfolioProjects = [
       "Improved staff productivity by 50%"
     ],
     technologies: ["NLP", "Calendar Integration", "SMS/Email Automation"],
-    image: "/lovable-uploads/f966e137-0539-43d9-b377-bb922e89d1e6.png"
+    image: healthcareImage
   }
 ];
 
