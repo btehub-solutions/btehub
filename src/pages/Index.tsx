@@ -12,6 +12,7 @@ import Footer from "@/components/Footer";
 import ChatWidget from "@/components/ChatWidget";
 import WhatsAppButton from "@/components/WhatsAppButton";
 import BookingCalendar from "@/components/BookingCalendar";
+import { SkipToContent } from "@/components/SkipToContent";
 import { usePerformanceMonitor } from "@/hooks/usePerformanceMonitor";
 
 const Index = () => {
@@ -19,15 +20,18 @@ const Index = () => {
 
   return (
     <div className="min-h-screen">
+      <SkipToContent />
       <Header />
-      <Hero />
+      <main id="main-content">
+        <Hero />
       <Services />
       <About />
       <Testimonials />
       <FAQ />
       <Newsletter />
       <BookingCalendar />
-      <Contact />
+        <Contact />
+      </main>
       <Footer />
       <ChatWidget />
       <WhatsAppButton />

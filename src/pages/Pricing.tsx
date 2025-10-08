@@ -5,6 +5,7 @@ import { Check, Zap, Rocket, Building2 } from "lucide-react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Link } from "react-router-dom";
+import { SEOHead } from "@/components/SEOHead";
 
 const pricingPlans = [
   {
@@ -62,6 +63,11 @@ const pricingPlans = [
 const Pricing = () => {
   return (
     <div className="min-h-screen">
+      <SEOHead
+        title="AI Service Pricing - BTEHub | Affordable AI Automation Solutions"
+        description="Transparent pricing for BTEHub's AI automation services. Choose from Starter, Professional, or Enterprise plans. Custom chatbot development, AI automation, and consulting packages starting from competitive rates."
+        canonicalUrl="https://btehub.com/pricing"
+      />
       <Header />
       
       <main className="pt-24 pb-20">

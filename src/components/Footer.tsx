@@ -1,5 +1,29 @@
+import { useNavigate, useLocation } from "react-router-dom";
 
 const Footer = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const scrollToSection = (sectionId: string) => {
+    // If we're not on the home page, navigate there first
+    if (location.pathname !== '/') {
+      navigate('/');
+      // Wait for navigation to complete, then scroll
+      setTimeout(() => {
+        const element = document.getElementById(sectionId);
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth' });
+        }
+      }, 100);
+    } else {
+      // We're already on home page, just scroll
+      const element = document.getElementById(sectionId);
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+  };
+
   return (
     <footer className="bg-primary/95 text-primary-foreground py-16 relative overflow-hidden">
       {/* Background gradient */}
@@ -41,7 +65,7 @@ const Footer = () => {
             <ul className="space-y-3 text-primary-foreground/80">
               <li>
                 <button 
-                  onClick={() => document.getElementById('services')?.scrollIntoView({ behavior: 'smooth' })}
+                  onClick={() => scrollToSection('services')}
                   className="hover:text-primary-foreground transition-colors duration-300 text-left"
                 >
                   AI Automation
@@ -49,7 +73,7 @@ const Footer = () => {
               </li>
               <li>
                 <button 
-                  onClick={() => document.getElementById('services')?.scrollIntoView({ behavior: 'smooth' })}
+                  onClick={() => scrollToSection('services')}
                   className="hover:text-primary-foreground transition-colors duration-300 text-left"
                 >
                   Chatbot Development
@@ -57,7 +81,7 @@ const Footer = () => {
               </li>
               <li>
                 <button 
-                  onClick={() => document.getElementById('services')?.scrollIntoView({ behavior: 'smooth' })}
+                  onClick={() => scrollToSection('services')}
                   className="hover:text-primary-foreground transition-colors duration-300 text-left"
                 >
                   Prompt Engineering
@@ -65,7 +89,7 @@ const Footer = () => {
               </li>
               <li>
                 <button 
-                  onClick={() => document.getElementById('services')?.scrollIntoView({ behavior: 'smooth' })}
+                  onClick={() => scrollToSection('services')}
                   className="hover:text-primary-foreground transition-colors duration-300 text-left"
                 >
                   AI Consulting
@@ -109,13 +133,13 @@ const Footer = () => {
           </p>
           <div className="flex gap-6 mt-4 md:mt-0">
             <button 
-              onClick={() => document.getElementById('home')?.scrollIntoView({ behavior: 'smooth' })}
+              onClick={() => scrollToSection('home')}
               className="text-primary-foreground/80 hover:text-primary-foreground transition-colors text-sm"
             >
               Privacy Policy
             </button>
             <button 
-              onClick={() => document.getElementById('home')?.scrollIntoView({ behavior: 'smooth' })}
+              onClick={() => scrollToSection('home')}
               className="text-primary-foreground/80 hover:text-primary-foreground transition-colors text-sm"
             >
               Terms of Service

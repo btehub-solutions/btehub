@@ -5,6 +5,7 @@ import { ArrowRight, CheckCircle2 } from "lucide-react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Link } from "react-router-dom";
+import { SEOHead } from "@/components/SEOHead";
 import ecommerceImage from "@/assets/portfolio-ecommerce-chatbot.jpg";
 import educationImage from "@/assets/portfolio-education-ai.jpg";
 import healthcareImage from "@/assets/portfolio-healthcare-automation.jpg";
@@ -57,6 +58,11 @@ const portfolioProjects = [
 const Portfolio = () => {
   return (
     <div className="min-h-screen">
+      <SEOHead
+        title="AI Portfolio - BTEHub Success Stories | 200+ AI Solutions Deployed"
+        description="Explore BTEHub's AI portfolio showcasing successful chatbot development, automation projects, and AI implementations across e-commerce, education, and healthcare. See real results from our 200+ deployed solutions."
+        canonicalUrl="https://btehub.com/portfolio"
+      />
       <Header />
       
       <main className="pt-24 pb-20">
