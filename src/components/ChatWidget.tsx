@@ -20,8 +20,10 @@ const ChatWidget = () => {
   const [messages, setMessages] = useState<Message[]>([]);
   const [inputMessage, setInputMessage] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const [sessionId, setSessionId] = useState<string | null>(null);
-  const [visitorId] = useState(() => `visitor_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`);
+  const [sessionToken, setSessionToken] = useState<string | null>(() => {
+    // Retrieve existing token from localStorage
+    return localStorage.getItem('chat_session_token');
+  });
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   const scrollToBottom = () => {
@@ -83,8 +85,7 @@ const ChatWidget = () => {
       const { data, error } = await supabase.functions.invoke('ai-chat', {
         body: {
           message: userMessage,
-          sessionId,
-          visitorId
+          sessionToken
         }
       });
 
@@ -97,9 +98,10 @@ const ChatWidget = () => {
         timestamp: new Date()
       }]);
 
-      // Update session ID if this is the first message
-      if (!sessionId && data.sessionId) {
-        setSessionId(data.sessionId);
+      // Store session token for future requests
+      if (data.sessionToken) {
+        setSessionToken(data.sessionToken);
+        localStorage.setItem('chat_session_token', data.sessionToken);
       }
 
     } catch (error) {

@@ -87,7 +87,7 @@ serve(async (req) => {
   }
 
   try {
-    const { message, sessionId, visitorId } = await req.json();
+    const { message, sessionToken } = await req.json();
 
     const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
     const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
@@ -97,19 +97,20 @@ serve(async (req) => {
 
     // Get or create chat session
     let session;
-    if (sessionId) {
+    if (sessionToken) {
       const { data } = await supabase
         .from('chat_sessions')
         .select('*')
-        .eq('id', sessionId)
+        .eq('session_token', sessionToken)
         .single();
       session = data;
     }
 
     if (!session) {
+      // Create new session with auto-generated token
       const { data } = await supabase
         .from('chat_sessions')
-        .insert({ visitor_id: visitorId })
+        .insert({ visitor_id: `visitor_${Date.now()}` })
         .select()
         .single();
       session = data;
@@ -166,7 +167,7 @@ serve(async (req) => {
 
     return new Response(JSON.stringify({
       message: aiMessage,
-      sessionId: session.id
+      sessionToken: session.session_token
     }), {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
     });

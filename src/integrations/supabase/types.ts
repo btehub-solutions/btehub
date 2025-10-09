@@ -133,6 +133,7 @@ export type Database = {
         Row: {
           created_at: string
           id: string
+          session_token: string | null
           updated_at: string
           visitor_email: string | null
           visitor_id: string
@@ -141,6 +142,7 @@ export type Database = {
         Insert: {
           created_at?: string
           id?: string
+          session_token?: string | null
           updated_at?: string
           visitor_email?: string | null
           visitor_id: string
@@ -149,6 +151,7 @@ export type Database = {
         Update: {
           created_at?: string
           id?: string
+          session_token?: string | null
           updated_at?: string
           visitor_email?: string | null
           visitor_id?: string
