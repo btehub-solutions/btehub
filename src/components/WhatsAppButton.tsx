@@ -1,4 +1,4 @@
-import { MessageCircle } from "lucide-react";
+import { WhatsappLogo } from "@phosphor-icons/react";
 import { Button } from "@/components/ui/button";
 
 const WhatsAppButton = () => {
@@ -19,7 +19,7 @@ const WhatsAppButton = () => {
         aria-label="Chat on WhatsApp"
         className="flex items-center gap-2"
       >
-        <MessageCircle className="w-6 h-6" />
+        <WhatsappLogo weight="fill" className="w-6 h-6" />
         <span className="hidden md:inline">WhatsApp</span>
       </a>
     </Button>

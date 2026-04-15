@@ -8,7 +8,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
-import { CalendarDays, Clock, User, Mail, Phone, MessageSquare } from "lucide-react";
+import { Calendar as CalendarIcon, Clock, User, Envelope, Phone, ChatCenteredText } from "@phosphor-icons/react";
 import { format } from "date-fns";
 import { bookingFormSchema, sanitizeInput, type BookingFormData } from "@/lib/validation";
 
@@ -177,7 +177,7 @@ const BookingCalendar = () => {
           <Card>
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
-                <CalendarDays className="h-5 w-5" />
+                <CalendarIcon weight="duotone" className="h-5 w-5" />
                 Select Date & Time
               </CardTitle>
               <CardDescription>
@@ -199,7 +199,7 @@ const BookingCalendar = () => {
               {selectedDate && (
                 <div>
                   <Label className="text-sm font-medium mb-2 block flex items-center gap-2">
-                    <Clock className="h-4 w-4" />
+                    <Clock weight="duotone" className="h-4 w-4" />
                     Available Times
                   </Label>
                   <div className="grid grid-cols-3 gap-2">
@@ -224,7 +224,7 @@ const BookingCalendar = () => {
           <Card>
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
-                <User className="h-5 w-5" />
+                <User weight="duotone" className="h-5 w-5" />
                 Your Information
               </CardTitle>
               <CardDescription>
@@ -236,7 +236,7 @@ const BookingCalendar = () => {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
                     <Label htmlFor="name" className="flex items-center gap-2">
-                      <User className="h-4 w-4" />
+                      <User weight="duotone" className="h-4 w-4" />
                       Full Name *
                     </Label>
                     <Input
@@ -252,7 +252,7 @@ const BookingCalendar = () => {
                   </div>
                   <div>
                     <Label htmlFor="email" className="flex items-center gap-2">
-                      <Mail className="h-4 w-4" />
+                      <Envelope weight="duotone" className="h-4 w-4" />
                       Email *
                     </Label>
                     <Input
@@ -271,7 +271,7 @@ const BookingCalendar = () => {
 
                 <div>
                   <Label htmlFor="phone" className="flex items-center gap-2">
-                    <Phone className="h-4 w-4" />
+                    <Phone weight="duotone" className="h-4 w-4" />
                     Phone Number *
                   </Label>
                   <Input
@@ -311,7 +311,7 @@ const BookingCalendar = () => {
 
                 <div>
                   <Label htmlFor="notes" className="flex items-center gap-2">
-                    <MessageSquare className="h-4 w-4" />
+                    <ChatCenteredText weight="duotone" className="h-4 w-4" />
                     Project Details
                   </Label>
                   <Textarea

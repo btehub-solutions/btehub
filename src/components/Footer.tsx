@@ -105,8 +105,8 @@ const Footer = () => {
                 <div className="w-5 h-5 mt-0.5 bg-primary-foreground/20 rounded-full flex items-center justify-center flex-shrink-0">
                   <div className="w-2 h-2 bg-primary-foreground rounded-full"></div>
                 </div>
-                <a href="mailto:bensamoladoyin.btehub@gmail.com" className="hover:text-primary-foreground transition-colors duration-300">
-                  bensamoladoyin.btehub@gmail.com
+                <a href="mailto:bensamoladoyin1@gmail.com" className="hover:text-primary-foreground transition-colors duration-300">
+                  bensamoladoyin1@gmail.com
                 </a>
               </li>
               <li className="flex items-start gap-3">
@@ -114,14 +114,14 @@ const Footer = () => {
                   <div className="w-2 h-2 bg-primary-foreground rounded-full"></div>
                 </div>
                 <a href="tel:+2347045422815" className="hover:text-primary-foreground transition-colors duration-300">
-                  07045422815
+                  +234 704 542 2815
                 </a>
               </li>
               <li className="flex items-start gap-3">
                 <div className="w-5 h-5 mt-0.5 bg-primary-foreground/20 rounded-full flex items-center justify-center flex-shrink-0">
                   <div className="w-2 h-2 bg-primary-foreground rounded-full"></div>
                 </div>
-                <span className="text-primary-foreground/80">Abeokuta, Ogun State</span>
+                <span className="text-primary-foreground/80">Ogun State, Nigeria</span>
               </li>
             </ul>
           </div>
@@ -129,7 +129,7 @@ const Footer = () => {
         
         <div className="border-t border-primary-foreground/20 pt-8 flex flex-col md:flex-row justify-between items-center">
           <p className="text-primary-foreground/80 text-sm">
-            &copy; 2024 BTEHub Solutions. All rights reserved.
+            &copy; 2026 BTEHub Solutions. All rights reserved.
           </p>
           <div className="flex gap-6 mt-4 md:mt-0">
             <button 

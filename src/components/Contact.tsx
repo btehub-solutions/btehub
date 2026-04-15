@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { Mail, Phone, MapPin, Send, CheckCircle } from "lucide-react";
+import { Envelope, Phone, MapPin, PaperPlaneTilt, CheckCircle } from "@phosphor-icons/react";
 import { useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { contactFormSchema, sanitizeInput, type ContactFormData } from "@/lib/validation";
@@ -100,7 +100,7 @@ const Contact = () => {
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16 animate-fade-in">
             <div className="inline-flex items-center gap-2 bg-primary/10 text-primary px-4 py-2 rounded-full text-sm font-medium mb-6">
-              <Mail className="h-4 w-4" />
+              <Envelope weight="duotone" className="h-4 w-4" />
               Get In Touch
             </div>
             <h2 className="text-3xl md:text-5xl font-bold text-foreground mb-6">
@@ -117,7 +117,7 @@ const Contact = () => {
             <div className="space-y-6 animate-slide-up">
               <Card className="p-8 flex items-start space-x-4 hover:shadow-professional transition-all duration-300 border-0 bg-gradient-to-br from-background to-primary/5 group">
                 <div className="text-primary group-hover:scale-110 transition-transform duration-300">
-                  <Mail className="h-8 w-8" />
+                  <Envelope weight="duotone" className="h-8 w-8" />
                 </div>
                 <div>
                   <h3 className="font-semibold text-foreground text-lg mb-2">Email Us</h3>
@@ -133,7 +133,7 @@ const Contact = () => {
 
               <Card className="p-8 flex items-start space-x-4 hover:shadow-professional transition-all duration-300 border-0 bg-gradient-to-br from-background to-primary/5 group">
                 <div className="text-primary group-hover:scale-110 transition-transform duration-300">
-                  <Phone className="h-8 w-8" />
+                  <Phone weight="duotone" className="h-8 w-8" />
                 </div>
                 <div>
                   <h3 className="font-semibold text-foreground text-lg mb-2">Call Us</h3>
@@ -149,7 +149,7 @@ const Contact = () => {
 
               <Card className="p-8 flex items-start space-x-4 hover:shadow-professional transition-all duration-300 border-0 bg-gradient-to-br from-background to-primary/5 group">
                 <div className="text-primary group-hover:scale-110 transition-transform duration-300">
-                  <MapPin className="h-8 w-8" />
+                  <MapPin weight="duotone" className="h-8 w-8" />
                 </div>
                 <div>
                   <h3 className="font-semibold text-foreground text-lg mb-2">Location</h3>
@@ -249,7 +249,7 @@ const Contact = () => {
                     ) : (
                       <>
                         Start AI Transformation
-                        <Send className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
+                        <PaperPlaneTilt weight="duotone" className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
                       </>
                     )}
                   </Button>
@@ -261,7 +261,7 @@ const Contact = () => {
               ) : (
                 <div className="text-center py-12 animate-scale-in">
                   <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
-                    <CheckCircle className="w-8 h-8 text-green-600" />
+                    <CheckCircle weight="duotone" className="w-8 h-8 text-green-600" />
                   </div>
                   <h3 className="text-2xl font-bold text-foreground mb-4">Message Sent Successfully!</h3>
                   <p className="text-muted-foreground leading-relaxed">
@@ -285,7 +285,7 @@ const Contact = () => {
               <Button asChild variant="professional" size="xl">
                 <a href="/book">
                   Book Free Consultation
-                  <Phone className="ml-2 h-5 w-5" />
+                  <Phone weight="duotone" className="ml-2 h-5 w-5" />
                 </a>
               </Button>
             </div>

@@ -1,6 +1,6 @@
 
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Play } from "lucide-react";
+import { ArrowRight, Play } from "@phosphor-icons/react";
 import { Link } from "react-router-dom";
 
 const Hero = () => {
@@ -22,20 +22,18 @@ const Hero = () => {
           <div className="animate-fade-in">
             <div className="inline-flex items-center gap-2 bg-primary/10 text-primary px-4 py-2 rounded-full text-sm font-medium mb-6 shadow-subtle">
               <div className="w-2 h-2 bg-primary rounded-full animate-bounce-subtle"></div>
-              Leading AI Automation Experts
+              Leading AI & ML Solutions Provider
             </div>
             
             <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-foreground mb-8 leading-tight">
-              Transforming Business With
+              Engineering Intelligent Systems 
               <span className="block text-transparent bg-gradient-to-r from-primary via-brand-blue-light to-brand-blue bg-clip-text animate-scale-in"> 
-                Artificial Intelligence
+                That Solve Real Problems
               </span>
             </h1>
             
             <p className="text-xl md:text-2xl text-muted-foreground mb-12 leading-relaxed max-w-4xl mx-auto">
-              BTEHub specializes in AI automation, chatbot development, and prompt engineering 
-              to help businesses unlock the full potential of artificial intelligence with 
-              <span className="font-semibold text-primary"> measurable results</span>.
+              We specialize in <span className="text-primary font-semibold">autonomous AI agents</span>, automation workflows, and scalable web applications. At BTEHub Solutions, we turn complex AI concepts into production-ready digital products.
             </p>
           </div>
           
@@ -43,7 +41,7 @@ const Hero = () => {
             <Button asChild variant="professional" size="xl" className="group">
               <Link to="/book">
                 Start Your AI Journey
-                <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
+                <ArrowRight weight="duotone" className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
               </Link>
             </Button>
             <Button 
@@ -52,7 +50,7 @@ const Hero = () => {
               className="group border-primary/30 hover:border-primary"
               onClick={handleDemoClick}
             >
-              <Play className="mr-2 h-5 w-5 group-hover:scale-110 transition-transform" />
+              <Play weight="duotone" className="mr-2 h-5 w-5 group-hover:scale-110 transition-transform" />
               See AI Demo
             </Button>
           </div>

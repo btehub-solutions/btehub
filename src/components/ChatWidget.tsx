@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { MessageCircle, X, Send, User, Bot } from 'lucide-react';
+import { ChatCircleDots, X, PaperPlaneTilt, User, Robot } from "@phosphor-icons/react";
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card } from '@/components/ui/card';
@@ -134,7 +134,7 @@ const ChatWidget = () => {
           data-chat-widget
           aria-label="Open AI chat assistant"
         >
-          <MessageCircle className="h-6 w-6" />
+          <ChatCircleDots weight="duotone" className="h-6 w-6" />
           <Badge className="absolute -top-1 -right-1 h-5 w-5 p-0 bg-accent text-accent-foreground text-xs flex items-center justify-center">
             AI
           </Badge>
@@ -147,7 +147,7 @@ const ChatWidget = () => {
           {/* Header */}
           <div className="flex items-center justify-between p-4 border-b bg-primary text-primary-foreground">
             <div className="flex items-center gap-2">
-              <Bot className="h-5 w-5" />
+              <Robot weight="duotone" className="h-5 w-5" />
               <div>
                 <h3 className="font-semibold text-sm">BTEHub AI Assistant</h3>
                 <p className="text-xs opacity-90">Online</p>
@@ -159,7 +159,7 @@ const ChatWidget = () => {
               onClick={() => setIsOpen(false)}
               className="h-8 w-8 text-primary-foreground hover:bg-primary-foreground/20"
             >
-              <X className="h-4 w-4" />
+              <X weight="duotone" className="h-4 w-4" />
             </Button>
           </div>
 
@@ -193,7 +193,7 @@ const ChatWidget = () => {
                   </div>
                   {message.role === 'user' && (
                     <div className="h-8 w-8 rounded-full bg-accent/10 flex items-center justify-center flex-shrink-0">
-                      <User className="h-4 w-4 text-accent-foreground" />
+                      <User weight="duotone" className="h-4 w-4 text-accent-foreground" />
                     </div>
                   )}
                 </div>
@@ -237,7 +237,7 @@ const ChatWidget = () => {
                 size="icon"
                 className="h-10 w-10"
               >
-                <Send className="h-4 w-4" />
+                <PaperPlaneTilt weight="duotone" className="h-4 w-4" />
               </Button>
             </div>
             <p className="text-xs text-muted-foreground mt-2 text-center">

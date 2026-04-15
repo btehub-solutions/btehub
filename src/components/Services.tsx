@@ -1,47 +1,47 @@
 
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Target, Lightbulb, Rocket, Users, ArrowRight, Brain, MessageCircle, Bot, Zap, Cpu, Settings } from "lucide-react";
+import { ArrowRight, Brain, ChatCircle, Robot, Lightning, Cpu, Gear } from "@phosphor-icons/react";
 import { Link } from "react-router-dom";
 import cleanProfessionalAi from "@/assets/clean-professional-ai.jpg";
 
 const Services = () => {
   const services = [
     {
-      icon: <Brain className="h-8 w-8" />,
-      title: "Artificial Intelligence",
-      description: "Custom AI solutions tailored to your business needs, from machine learning models to intelligent automation systems.",
-      features: ["Machine Learning", "Predictive Analytics", "AI Strategy"]
+      icon: <Brain weight="duotone" className="h-8 w-8" />,
+      title: "Intelligent Systems",
+      description: "Designing end-to-end AI/ML systems focused on real-world implementation rather than just prototypes.",
+      features: ["ML Model Deployment", "Neural Networks", "Data Pipeline Architecture"]
     },
     {
-      icon: <MessageCircle className="h-8 w-8" />,
-      title: "Prompt Engineering",
-      description: "Expert prompt design and optimization to maximize AI performance and get the most accurate results from language models.",
-      features: ["Prompt Optimization", "AI Fine-tuning", "Performance Testing"]
+      icon: <Robot weight="duotone" className="h-8 w-8" />,
+      title: "Autonomous AI Agents",
+      description: "Building intelligent agents and workflows that operate independently to execute complex business tasks.",
+      features: ["Agentic Workflows", "Auto-GDPR", "Task Orchestration"]
     },
     {
-      icon: <Bot className="h-8 w-8" />,
-      title: "Chatbot Development",
-      description: "Intelligent conversational AI that engages customers, provides support, and drives business growth 24/7.",
-      features: ["Custom Chatbots", "Multi-platform", "Analytics Dashboard"]
+      icon: <Lightning weight="duotone" className="h-8 w-8" />,
+      title: "Automation Workflows",
+      description: "Scale your operations with sophisticated AI-driven automation that handles repetitive processes with precision.",
+      features: ["Process Automation", "Enterprise Workflows", "Efficiency Audit"]
     },
     {
-      icon: <Zap className="h-8 w-8" />,
-      title: "AI Automation",
-      description: "Streamline your workflows with intelligent automation that reduces manual tasks and increases efficiency.",
-      features: ["Workflow Automation", "Process Optimization", "Cost Reduction"]
+      icon: <Cpu weight="duotone" className="h-8 w-8" />,
+      title: "Scalable Web Apps",
+      description: "Developing modern, high-performance web applications integrated with advanced AI capabilities.",
+      features: ["Next.js/React", "AI API Integration", "Cloud Architecture"]
     },
     {
-      icon: <Cpu className="h-8 w-8" />,
-      title: "AI Integration",
-      description: "Seamlessly integrate AI capabilities into your existing systems and applications for enhanced functionality.",
-      features: ["API Integration", "System Migration", "Custom Solutions"]
+      icon: <ChatCircle weight="duotone" className="h-8 w-8" />,
+      title: "Conversational AI",
+      description: "Developing advanced RAG-based chatbots and virtual assistants that provide human-like interactions.",
+      features: ["Vector Databases", "LLM Fine-tuning", "Semantic Search"]
     },
     {
-      icon: <Settings className="h-8 w-8" />,
-      title: "AI Consulting",
-      description: "Strategic guidance on AI implementation, helping you identify opportunities and create an AI roadmap for your business.",
-      features: ["Strategic Planning", "ROI Analysis", "Implementation Support"]
+      icon: <Gear weight="duotone" className="h-8 w-8" />,
+      title: "Digital Strategy",
+      description: "Providing strategic guidance on digital transformation and AI adoption to help your business scale safely.",
+      features: ["AI Literacy", "Transformation Roadmap", "Risk Assessment"]
     }
   ];
 
@@ -50,7 +50,7 @@ const Services = () => {
       <div className="container mx-auto px-4">
         <div className="max-w-4xl mx-auto text-center mb-16 animate-fade-in">
           <div className="inline-flex items-center gap-2 bg-primary/10 text-primary px-4 py-2 rounded-full text-sm font-medium mb-6">
-            <Zap className="h-4 w-4" />
+            <Lightning weight="duotone" className="h-4 w-4" />
             Our AI Services
           </div>
           <h2 className="text-3xl md:text-5xl font-bold text-foreground mb-6">
@@ -96,7 +96,7 @@ const Services = () => {
           <Button asChild variant="professional" size="xl">
             <Link to="/book">
               Start Your AI Project
-              <ArrowRight className="ml-2 h-5 w-5" />
+              <ArrowRight weight="duotone" className="ml-2 h-5 w-5" />
             </Link>
           </Button>
         </div>

@@ -1,7 +1,7 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, CheckCircle2 } from "lucide-react";
+import { ArrowRight, CheckCircle } from "@phosphor-icons/react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Link } from "react-router-dom";
@@ -9,49 +9,94 @@ import { SEOHead } from "@/components/SEOHead";
 import ecommerceImage from "@/assets/portfolio-ecommerce-chatbot.jpg";
 import educationImage from "@/assets/portfolio-education-ai.jpg";
 import healthcareImage from "@/assets/portfolio-healthcare-automation.jpg";
+import { ExperienceSection } from "@/components/ExperienceSection";
+import { CertificationsSection } from "@/components/CertificationsSection";
+import { CommunitySection } from "@/components/CommunitySection";
 
 const portfolioProjects = [
   {
-    title: "E-Commerce AI Chatbot",
-    client: "RetailPro Nigeria",
-    industry: "E-Commerce",
-    description: "Intelligent customer service chatbot handling product inquiries, order tracking, and personalized recommendations.",
+    title: "AlertDrive AI",
+    client: "Safety First Initiative",
+    industry: "Computer Vision",
+    description: "Real-time driver monitoring system for drowsiness and distraction detection using computer vision and deep learning.",
     results: [
-      "80% reduction in customer service workload",
-      "50% increase in customer satisfaction scores",
-      "24/7 automated support coverage",
-      "35% boost in conversion rates"
+      "98% accuracy in drowsiness detection",
+      "Real-time processing with <50ms latency",
+      "Successfully tested in diverse lighting conditions",
+      "Integrated with fleet management systems"
     ],
-    technologies: ["GPT-4", "Custom NLP", "Multi-channel Integration"],
+    technologies: ["Python", "PyTorch", "OpenCV", "Deep Learning"],
+    image: healthcareImage
+  },
+  {
+    title: "TaxNaija",
+    client: "Nigerian Fintech",
+    industry: "FinTech/Tax",
+    description: "AI-powered tax classification and liability prediction platform for Nigerian employees and businesses.",
+    results: [
+      "95% accuracy in tax classification",
+      "Automated liability reports in seconds",
+      "Up-to-date with current Nigerian tax laws",
+      "User-friendly conversational interface"
+    ],
+    technologies: ["NLP", "FastAPI", "React", "Predictive Analytics"],
     image: ecommerceImage
   },
   {
-    title: "Educational Platform AI Assistant",
-    client: "EduBridge Learning",
-    industry: "Education",
-    description: "Personalized learning assistant that adapts to student needs, provides instant feedback, and tracks progress.",
+    title: "VibeAI",
+    client: "Future-Ready Professionals",
+    industry: "EdTech",
+    description: "A next-gen AI learning platform designed for future-ready professionals. Features a dynamic interface for mastering AI-fluent communication.",
     results: [
-      "60% improvement in student engagement",
-      "45% faster assignment completion",
-      "92% student satisfaction rate",
-      "Reduced teacher administrative time by 40%"
+      "2,500+ active learners enrolled",
+      "High engagement with interactive AI components",
+      "Structured learning paths for AI mastery",
+      "Responsive and modern user interface"
     ],
-    technologies: ["Machine Learning", "Adaptive Learning AI", "Analytics Dashboard"],
+    technologies: ["Next.js", "Tailwind CSS", "OpenAI API", "Framer Motion"],
     image: educationImage
   },
   {
-    title: "Healthcare Appointment Automation",
-    client: "MediCare Clinics",
-    industry: "Healthcare",
-    description: "AI-powered scheduling system with appointment reminders, patient pre-screening, and automated follow-ups.",
+    title: "VetLink Connect",
+    client: "Divine Agvet",
+    industry: "AgriBusiness",
+    description: "A premium agribusiness platform for Divine Agvet featuring homegrown solutions for Nigerian livestock farms.",
     results: [
-      "70% reduction in no-show appointments",
-      "90% automation of scheduling tasks",
-      "Enhanced patient communication",
-      "Improved staff productivity by 50%"
+      "Streamlined order processing for vaccines",
+      "Direct connection between farmers and vets",
+      "Authentic medicines verification system",
+      "Improved supply chain visibility"
     ],
-    technologies: ["NLP", "Calendar Integration", "SMS/Email Automation"],
+    technologies: ["Web Architecture", "Database Design", "Cloud Hosting"],
     image: healthcareImage
+  },
+  {
+    title: "Olas Realtor Consulting",
+    client: "Olas Realtor Ltd",
+    industry: "Real Estate",
+    description: "A comprehensive real estate consulting platform with an integrated AI chatbot for the Nigerian property market.",
+    results: [
+      "24/7 automated property inquiries",
+      "Lead generation increase by 40%",
+      "Professional training portal integration",
+      "Seamless property discovery experience"
+    ],
+    technologies: ["Chatbot Development", "Real Estate API", "React"],
+    image: ecommerceImage
+  },
+  {
+    title: "O-Jay-Bee Farms Elevate",
+    client: "O-Jay-Bee Farms",
+    industry: "Agriculture",
+    description: "A digital transformation showcase for O-Jay-Bee Farms, highlighting trusted agricultural production and processing.",
+    results: [
+      "Digitized farm production records",
+      "Enhanced brand visibility in Ogun & Lagos",
+      "Automated processing workflow tracking",
+      "Scale-ready digital architecture"
+    ],
+    technologies: ["Digital Transformation", "Full-Stack Development", "UI/UX"],
+    image: educationImage
   }
 ];
 
@@ -59,8 +104,8 @@ const Portfolio = () => {
   return (
     <div className="min-h-screen">
       <SEOHead
-        title="AI Portfolio - BTEHub Success Stories | 200+ AI Solutions Deployed"
-        description="Explore BTEHub's AI portfolio showcasing successful chatbot development, automation projects, and AI implementations across e-commerce, education, and healthcare. See real results from our 200+ deployed solutions."
+        title="Portfolio - BTEHub Solutions | AI & ML Engineering Excellence"
+        description="Explore BTEHub Solutions' portfolio featuring AlertDrive AI, TaxNaija, and other high-impact AI/ML projects delivering measurable business results."
         canonicalUrl="https://btehub.com/portfolio"
       />
       <Header />
@@ -70,15 +115,15 @@ const Portfolio = () => {
           {/* Hero Section */}
           <div className="text-center mb-16">
             <h1 className="text-5xl md:text-6xl font-bold mb-6 text-gradient">
-              Our Success Stories
+              Engineering Excellence
             </h1>
             <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-              Real results from real businesses. See how we've helped organizations transform with AI.
+              A selection of our most impactful AI and ML engineering work, alongside our institutional milestones.
             </p>
           </div>
 
           {/* Portfolio Grid */}
-          <div className="space-y-16">
+          <div className="space-y-16 mb-24">
             {portfolioProjects.map((project, index) => (
               <Card 
                 key={index} 
@@ -112,7 +157,7 @@ const Portfolio = () => {
                         <ul className="space-y-2">
                           {project.results.map((result, idx) => (
                             <li key={idx} className="flex items-start gap-2">
-                              <CheckCircle2 className="w-5 h-5 text-brand-blue mt-0.5 flex-shrink-0" />
+                              <CheckCircle weight="duotone" className="w-5 h-5 text-brand-blue mt-0.5 flex-shrink-0" />
                               <span className="text-muted-foreground">{result}</span>
                             </li>
                           ))}
@@ -134,6 +179,10 @@ const Portfolio = () => {
             ))}
           </div>
 
+          <ExperienceSection />
+          <CertificationsSection />
+          <CommunitySection />
+
           {/* CTA Section */}
           <div className="text-center mt-20 p-12 rounded-2xl bg-gradient-to-r from-brand-blue/10 to-brand-purple/10 border border-border/50">
             <h2 className="text-3xl md:text-4xl font-bold mb-4">
@@ -145,7 +194,7 @@ const Portfolio = () => {
             <Button asChild size="lg" variant="professional">
               <Link to="/book" className="gap-2">
                 Schedule a Free Consultation
-                <ArrowRight className="w-5 h-5" />
+                <ArrowRight weight="duotone" className="w-5 h-5" />
               </Link>
             </Button>
           </div>

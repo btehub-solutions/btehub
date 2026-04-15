@@ -15,6 +15,10 @@ import BookingCalendar from "@/components/BookingCalendar";
 import { SkipToContent } from "@/components/SkipToContent";
 import { usePerformanceMonitor } from "@/hooks/usePerformanceMonitor";
 
+import { ExperienceSection } from "@/components/ExperienceSection";
+import { CertificationsSection } from "@/components/CertificationsSection";
+import { CommunitySection } from "@/components/CommunitySection";
+
 const Index = () => {
   usePerformanceMonitor();
 
@@ -24,10 +28,13 @@ const Index = () => {
       <Header />
       <main id="main-content">
         <Hero />
-      <Services />
-      <About />
-      <Testimonials />
-      <FAQ />
+        <Services />
+        <About />
+        <ExperienceSection />
+        <CertificationsSection />
+        <CommunitySection />
+        <Testimonials />
+        <FAQ />
       <Newsletter />
       <BookingCalendar />
         <Contact />
